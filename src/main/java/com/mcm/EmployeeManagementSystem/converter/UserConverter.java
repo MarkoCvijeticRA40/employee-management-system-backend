@@ -4,11 +4,14 @@ import com.mcm.EmployeeManagementSystem.entity.RoleEntity;
 import com.mcm.EmployeeManagementSystem.entity.UserEntity;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.repository.RoleRepository;
+import jakarta.persistence.Converter;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 @AllArgsConstructor
 public class UserConverter implements GenericConverter<User, UserEntity> {
     private final AddressConverter addressConverter;
