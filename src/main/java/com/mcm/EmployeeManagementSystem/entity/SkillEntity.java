@@ -18,6 +18,6 @@ public class SkillEntity {
     private String name;
     private Integer level;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity user;
 }

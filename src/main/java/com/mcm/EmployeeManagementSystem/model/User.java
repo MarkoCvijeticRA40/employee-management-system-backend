@@ -21,8 +21,7 @@ public class User {
     private Address address;
     private String phoneNum;
     private String title;
-    private List<String> roleName;
+    private List<String> roleNames;
     private LocalDateTime startOfWork;
-    private List<Skill> skills;
     private boolean isAccountEnabled;
 }
