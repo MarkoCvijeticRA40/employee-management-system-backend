@@ -13,4 +13,5 @@ public class Skill {
     private Long id;
     private String name;
     private Integer level;
+    private User user;
 }
