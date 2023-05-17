@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,15 +26,30 @@ public class UserStore implements IUserStore{
     }
 
     @Override
-    public List<User> findUsers(String email, String name, String surname) {
+    public List<User> findByRoleName(String roleName) {
 
-        List<User> users = findAll();
+        List<User> users = converter.toModel(repository.findAll());
         List<User> foundedUsers = new ArrayList<>();
 
         for (User user : users) {
-            if ((name == null || name.isEmpty() || user.getName().equalsIgnoreCase(name.toLowerCase())) &&
-                    (surname == null || surname.isEmpty() || user.getSurname().equalsIgnoreCase(surname.toLowerCase())) &&
-                    (email == null || email.isEmpty() || user.getEmail().equalsIgnoreCase(email.toLowerCase()))) {
+            List<String> roleNames = user.getRoleNames();
+            for (String role : roleNames) {
+                if (role.equals(roleName)) {
+                    users.add(user);
+                }
+            }
+        }
+        return foundedUsers;
+    }
+
+    @Override
+    public List<User> findByTitle(String title) {
+
+        List<User> users = converter.toModel(repository.findAll());
+        List<User> foundedUsers = new ArrayList<>();
+
+        for (User user : users) {
+            if(user.getTitle().equals(title)) {
                 foundedUsers.add(user);
             }
         }
@@ -41,11 +57,18 @@ public class UserStore implements IUserStore{
     }
 
     @Override
-    public List<User> findAll() {
-        return converter.toModel(repository.findAll());
+    public List<User> searchEngineers(String email, String name, String surname, LocalDateTime start,LocalDateTime end) {
+
+        //Ovde vratiti na findByRole
+        List<User> allEngineers = findByTitle("Engineer");
+
+        List<User> filteredUsers = allEngineers.stream()
+                .filter(user -> user.getEmail().toLowerCase().equals(email.toLowerCase()))
+                .filter(user -> user.getName().toLowerCase().equals(name.toLowerCase()))
+                .filter(user -> user.getSurname().toLowerCase().equals(surname.toLowerCase()))
+                .collect(Collectors.toList());
+
+        return filteredUsers;
     }
 
-
-
 }
-it 
