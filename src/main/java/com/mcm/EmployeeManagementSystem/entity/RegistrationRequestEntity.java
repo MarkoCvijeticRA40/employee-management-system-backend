@@ -27,6 +27,6 @@ public class RegistrationRequestEntity {
     private String title;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private RoleEntity role;
-    private RegistrationRequestStatus status;
+    private RegistrationRequestEntityStatus status;
     private LocalDateTime sendTime;
 }

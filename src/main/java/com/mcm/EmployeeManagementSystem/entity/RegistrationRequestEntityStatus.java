@@ -1,6 +1,6 @@
 package com.mcm.EmployeeManagementSystem.entity;
 
-public enum RegistrationRequestStatus {
+public enum RegistrationRequestEntityStatus {
     PENDING,
     ACCEPTED,
     REJECTED
