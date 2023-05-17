@@ -57,15 +57,14 @@ public class UserStore implements IUserStore{
     }
 
     @Override
-    public List<User> searchEngineers(String email, String name, String surname, LocalDateTime start,LocalDateTime end) {
-
-        //Ovde vratiti na findByRole
+    public List<User> searchEngineers(String email, String name, String surname, LocalDateTime start, LocalDateTime end) {
         List<User> allEngineers = findByTitle("Engineer");
 
         List<User> filteredUsers = allEngineers.stream()
-                .filter(user -> user.getEmail().toLowerCase().equals(email.toLowerCase()))
-                .filter(user -> user.getName().toLowerCase().equals(name.toLowerCase()))
-                .filter(user -> user.getSurname().toLowerCase().equals(surname.toLowerCase()))
+                .filter(user -> user.getEmail().equalsIgnoreCase(email))
+                .filter(user -> user.getName().equalsIgnoreCase(name))
+                .filter(user -> user.getSurname().equalsIgnoreCase(surname))
+                .filter(user -> user.getStartOfWork().isAfter(start) && user.getStartOfWork().isBefore(end))
                 .collect(Collectors.toList());
 
         return filteredUsers;

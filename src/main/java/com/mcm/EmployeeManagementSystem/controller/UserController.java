@@ -10,9 +10,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Getter
 @Setter
@@ -25,14 +27,22 @@ public class UserController {
     private final CreateUserUseCase createUserUseCase;
     private final UserSearchUseCase searchUserUseCase;
 
-    @GetMapping("/search/engineers")
-    public List<User> searchEngineers(@RequestParam String email, @RequestParam String name, @RequestParam String surname, @RequestParam String startDate, @RequestParam String endDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-        LocalDateTime parsedStartDate = LocalDateTime.parse(startDate, formatter);
-        LocalDateTime parsedEndDate = LocalDateTime.parse(endDate, formatter);
-        return searchUserUseCase.searchEngineers(email, name, surname, parsedStartDate, parsedEndDate);
-    }
+    @GetMapping("/search/engineers/{email}/{name}/{surname}/{startDate}/{endDate}")
+    public List<User> searchEngineers(
+            @PathVariable String email,
+            @PathVariable String name,
+            @PathVariable String surname,
+            @PathVariable String startDate,
+            @PathVariable String endDate
+    ) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'X (zzzz)", Locale.ENGLISH);
+        ZonedDateTime parsedStartDate = ZonedDateTime.parse(startDate, formatter);
+        ZonedDateTime parsedEndDate = ZonedDateTime.parse(endDate, formatter);
+        LocalDateTime localParsedStartDate = parsedStartDate.toLocalDateTime();
+        LocalDateTime localParsedEndDate = parsedEndDate.toLocalDateTime();
+        return searchUserUseCase.searchEngineers(email, name, surname, localParsedStartDate, localParsedEndDate);
 
+    }
     @GetMapping("rolename")
     public List<User> findByRoleName(@RequestParam String roleName) {
         return searchUserUseCase.findByRoleName(roleName);
@@ -43,16 +53,16 @@ public class UserController {
         return searchUserUseCase.findByTitle(title);
     }
 
-    //Funkcija za testiranje
+}
+/*
+//Funkcija za testiranje
     @PostMapping("/register")
     public User registerUser(@RequestBody User user) {
-
         Address address = new Address();
         address.setCity("Belgrade");
         address.setCountry("Serbia");
         address.setStreet("Slavija");
         address.setNumber("Trinaest");
-
         user.setEmail("dejanplayer@gmail.com");
         user.setPassword("Dejan123");
         user.setName("Dejan");
@@ -71,10 +81,6 @@ public class UserController {
         LocalDateTime endTime = LocalDateTime.of(2022,06,4,5,40);
         List<User> users = searchUserUseCase.searchEngineers("dejanplayer@gmail.com","Dejan","Milovanovic",startTime,endTime);
         List<User> list = new ArrayList<>();
-
         return createUserUseCase.save(user);
     }
-
-
-
-}
+ */
