@@ -2,6 +2,7 @@ package com.mcm.EmployeeManagementSystem.validator.registrationrequest;
 
 import com.mcm.EmployeeManagementSystem.constant.AddressConstant;
 import com.mcm.EmployeeManagementSystem.constant.RegistrationRequestConstant;
+import com.mcm.EmployeeManagementSystem.constant.RoleConstant;
 import com.mcm.EmployeeManagementSystem.model.RegistrationRequest;
 import com.mcm.EmployeeManagementSystem.model.RegistrationRequestStatus;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
@@ -9,16 +10,13 @@ import com.mcm.EmployeeManagementSystem.validator.Validator;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 import static org.apache.logging.log4j.util.Strings.isBlank;
 
 @Component
 public class CreateRegistrationRequestValidator implements Validator<RegistrationRequest> {
     private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
-
-    private static boolean isValid(String password) {
-        return password.matches(PASSWORD_REGEX);
-    }
 
     @Override
     public ValidationReport validate(RegistrationRequest registrationRequest) {
@@ -75,6 +73,11 @@ public class CreateRegistrationRequestValidator implements Validator<Registratio
             if (isBlank(registrationRequest.getRoleName())) {
                 report.setValid(false);
                 report.addMessage(RegistrationRequestConstant.ROLE_NAME, "role name is blank");
+            } else {
+                if (!isRoleNameValid(registrationRequest)) {
+                    report.setValid(false);
+                    report.addMessage(RegistrationRequestConstant.ROLE_NAME, "invalid role name");
+                }
             }
             if (registrationRequest.getStatus() != RegistrationRequestStatus.PENDING) {
                 report.setValid(false);
@@ -87,5 +90,13 @@ public class CreateRegistrationRequestValidator implements Validator<Registratio
         }
 
         return report;
+    }
+
+    private static boolean isValid(String password) {
+        return password.matches(PASSWORD_REGEX);
+    }
+
+    private static boolean isRoleNameValid(RegistrationRequest registrationRequest) {
+        return Stream.of(RoleConstant.SOFTWARE_ENGINEER, RoleConstant.HR_MANAGER, RoleConstant.PROJECT_MANAGER).anyMatch(s -> registrationRequest.getRoleName().equals(s));
     }
 }

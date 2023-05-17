@@ -1,4 +1,4 @@
-package com.mcm.EmployeeManagementSystem.usecase;
+package com.mcm.EmployeeManagementSystem.usecase.registrationrequest;
 
 import com.mcm.EmployeeManagementSystem.dto.Response;
 import com.mcm.EmployeeManagementSystem.model.RegistrationRequest;
