@@ -3,10 +3,12 @@ package com.mcm.EmployeeManagementSystem.converter;
 import com.mcm.EmployeeManagementSystem.entity.SkillEntity;
 import com.mcm.EmployeeManagementSystem.model.Skill;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 @AllArgsConstructor
 public class SkillConverter implements GenericConverter<Skill, SkillEntity> {
     private final UserConverter userConverter;
