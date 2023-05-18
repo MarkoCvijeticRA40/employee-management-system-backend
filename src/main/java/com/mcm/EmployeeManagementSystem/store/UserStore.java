@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-public class UserStore implements IUserStore{
+public class UserStore implements IUserStore {
 
     private final UserRepository repository;
     private final UserConverter converter;
@@ -49,7 +49,7 @@ public class UserStore implements IUserStore{
         List<User> foundedUsers = new ArrayList<>();
 
         for (User user : users) {
-            if(user.getTitle().equals(title)) {
+            if (user.getTitle().equals(title)) {
                 foundedUsers.add(user);
             }
         }
@@ -69,5 +69,37 @@ public class UserStore implements IUserStore{
 
         return filteredUsers;
     }
+
+    @Override
+    public List<User> getAllEmployees() {
+        List<User> users = converter.toModel(repository.findAll());
+        List<User> filteredUsers = new ArrayList<>();
+
+        for (User user : users) {
+            boolean hasAdministratorRole = false;
+            for (String role : user.getRoleNames()) {
+                if (role.equals("Administrator")) {
+                    hasAdministratorRole = true;
+                    break;
+                }
+            }
+            if (!hasAdministratorRole) {
+                filteredUsers.add(user);
+            }
+        }
+        return filteredUsers;
+    }
+
+    public User getById(Long id) {
+
+        List<User> users = converter.toModel(repository.findAll());
+        for (User user : users) {
+            if (user.getId() == id) {
+                return user;
+            }
+        }
+        return null;
+    }
+
 
 }
