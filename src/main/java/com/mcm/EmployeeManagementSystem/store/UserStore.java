@@ -27,7 +27,6 @@ public class UserStore implements IUserStore {
 
     @Override
     public List<User> findByRoleName(String roleName) {
-
         List<User> users = converter.toModel(repository.findAll());
         List<User> foundedUsers = new ArrayList<>();
 
@@ -35,7 +34,8 @@ public class UserStore implements IUserStore {
             List<String> roleNames = user.getRoleNames();
             for (String role : roleNames) {
                 if (role.equals(roleName)) {
-                    users.add(user);
+                    foundedUsers.add(user); // Add the user to the foundedUsers list, not the users list
+                    break; // Exit the inner loop since the user is found
                 }
             }
         }
@@ -58,7 +58,7 @@ public class UserStore implements IUserStore {
 
     @Override
     public List<User> searchEngineers(String email, String name, String surname, LocalDateTime start, LocalDateTime end) {
-        List<User> allEngineers = findByTitle("Engineer");
+        List<User> allEngineers = findByRoleName("Software engineer\n add .");
 
         List<User> filteredUsers = allEngineers.stream()
                 .filter(user -> user.getEmail().equalsIgnoreCase(email))
