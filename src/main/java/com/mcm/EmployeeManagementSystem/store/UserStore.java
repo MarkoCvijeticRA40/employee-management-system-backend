@@ -58,7 +58,7 @@ public class UserStore implements IUserStore {
 
     @Override
     public List<User> searchEngineers(String email, String name, String surname, LocalDateTime start, LocalDateTime end) {
-        List<User> allEngineers = findByRoleName("Software engineer\n add .");
+        List<User> allEngineers = findByRoleName("Software engineer\n");
 
         List<User> filteredUsers = allEngineers.stream()
                 .filter(user -> user.getEmail().equalsIgnoreCase(email))
