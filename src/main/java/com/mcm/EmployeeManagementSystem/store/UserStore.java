@@ -71,19 +71,12 @@ public class UserStore implements IUserStore {
     }
 
     @Override
-    public List<User> getAllEmployees() {
+    public List<User> getAllEnabled() {
         List<User> users = converter.toModel(repository.findAll());
         List<User> filteredUsers = new ArrayList<>();
 
         for (User user : users) {
-            boolean hasAdministratorRole = false;
-            for (String role : user.getRoleNames()) {
-                if (role.equals("Administrator")) {
-                    hasAdministratorRole = true;
-                    break;
-                }
-            }
-            if (!hasAdministratorRole) {
+            if(user.isAccountEnabled() == true) {
                 filteredUsers.add(user);
             }
         }
@@ -101,5 +94,23 @@ public class UserStore implements IUserStore {
         return null;
     }
 
+    @Override
+    public List<User> getAllPotentialWorkers() {
+        List<User> users = converter.toModel(repository.findAll());
+        List<User> filteredUsers = new ArrayList<>();
 
+        for (User user : users) {
+            boolean hasSEorPMRole = false;
+            for (String role : user.getRoleNames()) {
+                if (role.equals("Software engineer\n")  || role.equals("Project manager")) {
+                    hasSEorPMRole = true;
+                    break;
+                }
+            }
+            if (hasSEorPMRole) {
+                filteredUsers.add(user);
+            }
+        }
+        return filteredUsers;
+    }
 }
