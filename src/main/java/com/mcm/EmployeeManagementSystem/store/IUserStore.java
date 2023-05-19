@@ -12,6 +12,6 @@ public interface IUserStore {
     public User save(User user);
     public List<User> findByRoleName(String roleName);
     public List<User> findByTitle(String title);
-
-
+    public List<User> getAllEmployees();
+    public User getById(Long id);
 }

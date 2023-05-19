@@ -3,6 +3,8 @@ package com.mcm.EmployeeManagementSystem.controller;
 import com.mcm.EmployeeManagementSystem.dto.Response;
 import com.mcm.EmployeeManagementSystem.model.Address;
 import com.mcm.EmployeeManagementSystem.model.User;
+import com.mcm.EmployeeManagementSystem.repository.UserRepository;
+import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.usecase.CreateUserUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.UserSearchUseCase;
 import lombok.AllArgsConstructor;
@@ -26,14 +28,11 @@ public class UserController {
 
     private final CreateUserUseCase createUserUseCase;
     private final UserSearchUseCase searchUserUseCase;
+    private final UserStore store;
+
 
     @GetMapping("/search/engineers/{email}/{name}/{surname}/{startDate}/{endDate}")
-    public List<User> searchEngineers(
-            @PathVariable String email,
-            @PathVariable String name,
-            @PathVariable String surname,
-            @PathVariable String startDate,
-            @PathVariable String endDate
+    public List<User> searchEngineers(@PathVariable String email, @PathVariable String name, @PathVariable String surname, @PathVariable String startDate, @PathVariable String endDate
     ) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'X (zzzz)", Locale.ENGLISH);
         ZonedDateTime parsedStartDate = ZonedDateTime.parse(startDate, formatter);
@@ -53,6 +52,27 @@ public class UserController {
         return searchUserUseCase.findByTitle(title);
     }
 
+    @GetMapping("employees")
+    public List<User> getAllEmployees() {
+        return store.getAllEmployees();
+    }
+    @GetMapping("/{id}")
+    public User getByEmail(@PathVariable int id) {
+        Long Id = (long) id;
+        User user = store.getById(Id);
+        return store.getById(Id);
+    }
+
+    @PutMapping("/update")
+    public User updateUser(@RequestBody User user) {
+        return store.save(user);
+    }
+
+    @PostMapping("/register/administrator")
+    public User registerUser(@RequestBody User user) {
+        user.setAccountEnabled(false);
+        return createUserUseCase.save(user);
+    }
 }
 /*
 //Funkcija za testiranje
