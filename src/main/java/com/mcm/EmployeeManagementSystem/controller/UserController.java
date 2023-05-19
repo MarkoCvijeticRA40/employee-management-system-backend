@@ -1,9 +1,6 @@
 package com.mcm.EmployeeManagementSystem.controller;
 
-import com.mcm.EmployeeManagementSystem.dto.Response;
-import com.mcm.EmployeeManagementSystem.model.Address;
 import com.mcm.EmployeeManagementSystem.model.User;
-import com.mcm.EmployeeManagementSystem.repository.UserRepository;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.usecase.CreateUserUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.UserSearchUseCase;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,18 +26,6 @@ public class UserController {
     private final UserSearchUseCase searchUserUseCase;
     private final UserStore store;
 
-
-    @GetMapping("/search/engineers/{email}/{name}/{surname}/{startDate}/{endDate}")
-    public List<User> searchEngineers(@PathVariable String email, @PathVariable String name, @PathVariable String surname, @PathVariable String startDate, @PathVariable String endDate
-    ) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'X (zzzz)", Locale.ENGLISH);
-        ZonedDateTime parsedStartDate = ZonedDateTime.parse(startDate, formatter);
-        ZonedDateTime parsedEndDate = ZonedDateTime.parse(endDate, formatter);
-        LocalDateTime localParsedStartDate = parsedStartDate.toLocalDateTime();
-        LocalDateTime localParsedEndDate = parsedEndDate.toLocalDateTime();
-        return searchUserUseCase.searchEngineers(email, name, surname, localParsedStartDate, localParsedEndDate);
-
-    }
     @GetMapping("rolename")
     public List<User> findByRoleName(@RequestParam String roleName) {
         return searchUserUseCase.findByRoleName(roleName);
@@ -52,10 +36,17 @@ public class UserController {
         return searchUserUseCase.findByTitle(title);
     }
 
-    @GetMapping("employees")
-    public List<User> getAllEmployees() {
-        return store.getAllEmployees();
+    @GetMapping("enabled")
+    public List<User> getAllEnabled() {
+        return store.getAllEnabled();
     }
+
+    //Dobavljam samo potencijalne iznenjere i menadzere za neki projekat.Administratori i HR menadzeri ne rade direktno na projektu
+    @GetMapping("potential/workers")
+    public List<User> getAllPotentialWorkers() {
+        return store.getAllPotentialWorkers();
+    }
+
     @GetMapping("/{id}")
     public User getByEmail(@PathVariable int id) {
         Long Id = (long) id;
@@ -73,34 +64,16 @@ public class UserController {
         user.setAccountEnabled(false);
         return createUserUseCase.save(user);
     }
-}
-/*
-//Funkcija za testiranje
-    @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
-        Address address = new Address();
-        address.setCity("Belgrade");
-        address.setCountry("Serbia");
-        address.setStreet("Slavija");
-        address.setNumber("Trinaest");
-        user.setEmail("dejanplayer@gmail.com");
-        user.setPassword("Dejan123");
-        user.setName("Dejan");
-        user.setSurname("Milovanovic");
-        user.setAddress(address);
-        user.setPhoneNum("12412125125");
-        user.setTitle("Engineer");
-        List<String> roles = new ArrayList<>();
-        String engineer = "Engineer";
-        roles.add(engineer);
-        user.setRoleNames(roles);
-        LocalDateTime time = LocalDateTime.now();
-        user.setStartOfWork(time);
-        user.setAccountEnabled(true);
-        LocalDateTime startTime = LocalDateTime.of(2021,06,4,5,40);
-        LocalDateTime endTime = LocalDateTime.of(2022,06,4,5,40);
-        List<User> users = searchUserUseCase.searchEngineers("dejanplayer@gmail.com","Dejan","Milovanovic",startTime,endTime);
-        List<User> list = new ArrayList<>();
-        return createUserUseCase.save(user);
+
+    @GetMapping("/search/engineers/{email}/{name}/{surname}/{startDate}/{endDate}")
+    public List<User> searchEngineers(@PathVariable String email, @PathVariable String name, @PathVariable String surname, @PathVariable String startDate, @PathVariable String endDate
+    ) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'X (zzzz)", Locale.ENGLISH);
+        ZonedDateTime parsedStartDate = ZonedDateTime.parse(startDate, formatter);
+        ZonedDateTime parsedEndDate = ZonedDateTime.parse(endDate, formatter);
+        LocalDateTime localParsedStartDate = parsedStartDate.toLocalDateTime();
+        LocalDateTime localParsedEndDate = parsedEndDate.toLocalDateTime();
+        return searchUserUseCase.searchEngineers(email, name, surname, localParsedStartDate, localParsedEndDate);
     }
- */
+}
+
