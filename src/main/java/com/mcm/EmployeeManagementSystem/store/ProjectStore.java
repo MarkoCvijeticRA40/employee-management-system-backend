@@ -6,6 +6,8 @@ import com.mcm.EmployeeManagementSystem.repository.ProjectRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class ProjectStore implements IProjectStore {
@@ -18,6 +20,9 @@ public class ProjectStore implements IProjectStore {
         return converter.toModel(repository.save(converter.toEntity(project)));
     }
 
-
+    @Override
+    public List<Project> findAll() {
+        return converter.toModel(repository.findAll());
+    }
 
 }

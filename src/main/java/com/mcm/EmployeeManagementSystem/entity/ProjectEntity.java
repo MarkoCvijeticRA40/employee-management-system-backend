@@ -19,7 +19,7 @@ public class ProjectEntity {
     private Long id;
     private String name;
     private String duration;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "project_user",
             joinColumns = @JoinColumn(name = "project_id"),
