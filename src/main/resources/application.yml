@@ -16,3 +16,13 @@ spring:
     open-in-view: false
     database: POSTGRESQL
     show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: isaprojekat1@gmail.com
+    password: bpyjrqpswdubdjrf
+    properties:
+      mail.smtp.starttls.enable: true
+      mail.smtp.auth: true
+      mail.smtp.ssl.trust: smtp.gmail.com
+  secretKey: "bXktc2VjcmV0LWtleS12YWx1ZQ=="

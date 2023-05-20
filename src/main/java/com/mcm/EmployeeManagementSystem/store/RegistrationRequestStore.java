@@ -22,4 +22,12 @@ public class RegistrationRequestStore {
     public List<RegistrationRequest> find(RegistrationRequestEntityStatus status) {
         return converter.toModel(repository.findByStatus(status));
     }
+
+    public RegistrationRequest find(Long id) {
+        return converter.toModel(repository.findOne(id));
+    }
+
+    public boolean exists(Long id) {
+        return repository.existsById(id);
+    }
 }

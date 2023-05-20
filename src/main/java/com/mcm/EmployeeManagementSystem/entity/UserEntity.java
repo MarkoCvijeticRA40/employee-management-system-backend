@@ -22,7 +22,7 @@ public class UserEntity {
     private String password;
     private String name;
     private String surname;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private AddressEntity address;
     private String phoneNum;

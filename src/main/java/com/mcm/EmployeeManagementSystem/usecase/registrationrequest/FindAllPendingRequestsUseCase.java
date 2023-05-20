@@ -5,14 +5,14 @@ import com.mcm.EmployeeManagementSystem.entity.RegistrationRequestEntityStatus;
 import com.mcm.EmployeeManagementSystem.model.RegistrationRequest;
 import com.mcm.EmployeeManagementSystem.store.RegistrationRequestStore;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class FindAllPendingRequestsUseCase {
     private final RegistrationRequestStore store;
 

@@ -1,6 +1,6 @@
 package com.mcm.EmployeeManagementSystem.constant;
 
-public class RegistrationRequestConstant {
+public final class RegistrationRequestConstant {
     public static final String REGISTRATION_REQUEST = "registration request";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
