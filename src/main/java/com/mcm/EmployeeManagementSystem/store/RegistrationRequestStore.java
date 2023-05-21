@@ -30,4 +30,9 @@ public class RegistrationRequestStore {
     public boolean exists(Long id) {
         return repository.existsById(id);
     }
+
+    public RegistrationRequest find(String email) {
+        return converter.toModel(repository.findByEmail(email));
+    }
+
 }

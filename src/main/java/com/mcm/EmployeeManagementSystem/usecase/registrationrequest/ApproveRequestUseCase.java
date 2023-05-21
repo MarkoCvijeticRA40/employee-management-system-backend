@@ -13,7 +13,7 @@ import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.usecase.email.SendEmailUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.GenerateActivationLinkUseCase;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
-import com.mcm.EmployeeManagementSystem.validator.registrationrequest.ReadRequestValidator;
+import com.mcm.EmployeeManagementSystem.validator.registrationrequest.ChangeRequestStatusValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ import java.util.List;
 public class ApproveRequestUseCase {
     private final RegistrationRequestStore store;
     private final UserStore userStore;
-    private final ReadRequestValidator validator;
+    private final ChangeRequestStatusValidator validator;
     private final AddressStore addressStore;
     private final GenerateActivationLinkUseCase generateActivationLinkUseCase;
     private final SendEmailUseCase sendEmailUseCase;
@@ -44,7 +44,7 @@ public class ApproveRequestUseCase {
             User user = toUser(request);
             User savedUser = userStore.save(user);
             String message = generateActivationLinkUseCase.generateActivationLink(savedUser.getId().toString());
-            sendEmailUseCase.send(user, message, EmailConstant.ACTIVATION_SUBJECT);
+            sendEmailUseCase.send(user.getEmail(), message, EmailConstant.ACTIVATION_SUBJECT);
             ActivationLink activationLink = new ActivationLink(0L, message, false);
             activationLinkStore.save(activationLink);
         }

@@ -6,6 +6,7 @@ import com.mcm.EmployeeManagementSystem.model.RegistrationRequestStatus;
 import com.mcm.EmployeeManagementSystem.usecase.registrationrequest.ApproveRequestUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.registrationrequest.CreateRequestUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.registrationrequest.FindAllPendingRequestsUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.registrationrequest.RejectRequestUseCase;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +25,7 @@ public class RegistrationRequestController {
     private final CreateRequestUseCase createRequestUseCase;
     private final FindAllPendingRequestsUseCase findAllPendingRequestsUseCase;
     private final ApproveRequestUseCase approveRequestUseCase;
+    private final RejectRequestUseCase rejectRequestUseCase;
 
     @PostMapping
     public Response create(@RequestBody RegistrationRequest registrationRequest) {
@@ -40,5 +42,10 @@ public class RegistrationRequestController {
     @PutMapping("approve/{id}")
     public Response approve(@PathVariable Long id) throws NoSuchAlgorithmException, InvalidKeyException {
         return approveRequestUseCase.approve(id);
+    }
+
+    @PutMapping("reject/{requestId}")
+    public Response reject(@PathVariable("requestId") Long requestId, @RequestBody String reasonForReject) {
+        return rejectRequestUseCase.reject(requestId, reasonForReject);
     }
 }

@@ -1,6 +1,5 @@
 package com.mcm.EmployeeManagementSystem.usecase.email;
 
-import com.mcm.EmployeeManagementSystem.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -19,9 +18,9 @@ public class SendEmailUseCase {
     private Environment env;
 
     @Async
-    public void send(User user, String message, String subject) throws MailException {
+    public void send(String email, String message, String subject) throws MailException {
         SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(user.getEmail());
+        mail.setTo(email);
         mail.setFrom(env.getProperty("spring.mail.username"));
         mail.setSubject(subject);
         mail.setText(message);

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface RegistrationRequestRepository extends EntityRepository<RegistrationRequestEntity> {
     List<RegistrationRequestEntity> findByStatus(RegistrationRequestEntityStatus status);
+
+    RegistrationRequestEntity findByEmail(String email);
 }
