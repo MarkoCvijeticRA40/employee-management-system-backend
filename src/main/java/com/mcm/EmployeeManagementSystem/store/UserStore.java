@@ -23,4 +23,8 @@ public class UserStore {
     public User find(Long id) {
         return converter.toModel(repository.findOne(id));
     }
+
+    public User find(String email) {
+        return converter.toModel(repository.findUserByEmail(email));
+    }
 }

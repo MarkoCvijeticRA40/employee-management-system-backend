@@ -27,7 +27,7 @@ public class RegistrationRequestController {
     private final ApproveRequestUseCase approveRequestUseCase;
     private final RejectRequestUseCase rejectRequestUseCase;
 
-    @PostMapping
+    @PostMapping("/register")
     public Response create(@RequestBody RegistrationRequest registrationRequest) {
         registrationRequest.setStatus(RegistrationRequestStatus.PENDING);
         registrationRequest.setSendTime(LocalDateTime.now());

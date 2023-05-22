@@ -6,6 +6,7 @@ import com.mcm.EmployeeManagementSystem.store.RegistrationRequestStore;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
 import com.mcm.EmployeeManagementSystem.validator.registrationrequest.CreateRegistrationRequestValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,13 +14,13 @@ import org.springframework.stereotype.Service;
 public class CreateRequestUseCase {
     private final RegistrationRequestStore store;
     private final CreateRegistrationRequestValidator validator;
-    //private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public Response create(RegistrationRequest registrationRequest) {
         ValidationReport report = validator.validate(registrationRequest);
         RegistrationRequest createdRegistrationRequest = new RegistrationRequest();
         if (report.isValid()) {
-            //registrationRequest.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
+            registrationRequest.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             createdRegistrationRequest = store.save(registrationRequest);
         }
 
