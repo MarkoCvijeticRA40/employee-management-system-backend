@@ -5,6 +5,7 @@ import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -25,6 +26,22 @@ public class UserStore implements IUserStore {
         return converter.toModel(repository.save(converter.toEntity(user)));
     }
 
+    public boolean exists(Long id) {
+        return repository.existsById(id);
+    }
+
+    public User find(Long id) {
+        return converter.toModel(repository.findOne(id));
+    }
+
+    public User find(String email) {
+        return converter.toModel(repository.findUserByEmail(email));
+    }
+
+    public boolean exists(String email) {
+        return repository.existsByEmail(email);
+    }
+  
     @Override
     public List<User> findByRoleName(String roleName) {
         List<User> users = converter.toModel(repository.findAll());
