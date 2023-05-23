@@ -1,17 +1,11 @@
 package com.mcm.EmployeeManagementSystem.controller;
 
-import com.mcm.EmployeeManagementSystem.dto.AuthenticationRequest;
-import com.mcm.EmployeeManagementSystem.dto.AuthenticationResponse;
-import com.mcm.EmployeeManagementSystem.dto.PasswordlessAuthenticationRequest;
-import com.mcm.EmployeeManagementSystem.dto.Response;
+import com.mcm.EmployeeManagementSystem.dto.*;
 import com.mcm.EmployeeManagementSystem.handler.exceptions.InvalidLinkException;
 import com.mcm.EmployeeManagementSystem.handler.exceptions.InvalidTokenException;
 import com.mcm.EmployeeManagementSystem.handler.exceptions.TokenLinkIsAlreadyUsedException;
 import com.mcm.EmployeeManagementSystem.security.config.JwtService;
-import com.mcm.EmployeeManagementSystem.usecase.authentication.GenerateTokensUseCase;
-import com.mcm.EmployeeManagementSystem.usecase.authentication.IsShortTermTokenValidUseCase;
-import com.mcm.EmployeeManagementSystem.usecase.authentication.LoginUseCase;
-import com.mcm.EmployeeManagementSystem.usecase.authentication.PasswordlessLoginUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.authentication.*;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.IsTokenLinkUsedUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.SetTokenLinkToUsedUseCase;
@@ -41,6 +35,7 @@ public class AuthenticationController {
     private final IsShortTermTokenValidUseCase isShortTermTokenValidUseCase;
     private final JwtService jwtService;
     private final GenerateTokensUseCase generateTokensUseCase;
+    private final RefreshTokenUseCase refreshTokenUseCase;
 
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody AuthenticationRequest request) {
@@ -74,6 +69,11 @@ public class AuthenticationController {
         } else {
             throw new InvalidLinkException();
         }
+    }
+
+    @GetMapping("/refresh-token")
+    public Response refresh(@RequestBody RefreshTokenRequest request) throws NoSuchAlgorithmException, InvalidKeyException {
+        return refreshTokenUseCase.refresh(request.getRefreshToken());
     }
 
 }
