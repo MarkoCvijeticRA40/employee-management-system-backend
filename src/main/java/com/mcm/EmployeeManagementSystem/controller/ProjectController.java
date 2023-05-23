@@ -1,7 +1,6 @@
 package com.mcm.EmployeeManagementSystem.controller;
 
 import com.mcm.EmployeeManagementSystem.model.Project;
-import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.store.ProjectStore;
 import org.springframework.web.bind.annotation.*;
 

@@ -4,7 +4,6 @@ import com.mcm.EmployeeManagementSystem.entity.RoleEntity;
 import com.mcm.EmployeeManagementSystem.entity.UserEntity;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.repository.RoleRepository;
-import jakarta.persistence.Converter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,17 +1,16 @@
 package com.mcm.EmployeeManagementSystem.converter;
 
-import com.mcm.EmployeeManagementSystem.entity.SkillEntity;
-import com.mcm.EmployeeManagementSystem.model.Project;
 import com.mcm.EmployeeManagementSystem.entity.ProjectEntity;
-import com.mcm.EmployeeManagementSystem.model.Skill;
+import com.mcm.EmployeeManagementSystem.model.Project;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class ProjectConverter implements GenericConverter<Project, ProjectEntity>{
+public class ProjectConverter implements GenericConverter<Project, ProjectEntity> {
 
     private final UserConverter userConverter;
 

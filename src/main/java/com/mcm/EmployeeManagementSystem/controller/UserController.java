@@ -1,5 +1,9 @@
 package com.mcm.EmployeeManagementSystem.controller;
 
+import com.mcm.EmployeeManagementSystem.model.User;
+import com.mcm.EmployeeManagementSystem.store.UserStore;
+import com.mcm.EmployeeManagementSystem.usecase.CreateUserUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.UserSearchUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.IsActivationLinkUsedUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.SetLinkToUsedUseCase;
@@ -7,29 +11,15 @@ import com.mcm.EmployeeManagementSystem.usecase.user.ActivateAccountUseCase;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import com.mcm.EmployeeManagementSystem.model.User;
-import com.mcm.EmployeeManagementSystem.store.UserStore;
-import com.mcm.EmployeeManagementSystem.usecase.CreateUserUseCase;
-import com.mcm.EmployeeManagementSystem.usecase.UserSearchUseCase;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
-
-
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter

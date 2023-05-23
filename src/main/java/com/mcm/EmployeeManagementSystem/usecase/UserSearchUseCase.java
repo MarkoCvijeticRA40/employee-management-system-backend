@@ -4,6 +4,7 @@ import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class UserSearchUseCase {
     private final UserStore userStore;
 
     public List<User> searchEngineers(String email, String name, String lastname, LocalDateTime startDate, LocalDateTime endDate) {
-        List<User> users = userStore.searchEngineers(email, name, lastname,startDate,endDate);
+        List<User> users = userStore.searchEngineers(email, name, lastname, startDate, endDate);
         return users;
     }
 
@@ -22,8 +23,7 @@ public class UserSearchUseCase {
         return userStore.save(appUser);
     }
 
-    public List<User> findByRoleName(String roleName)
-    {
+    public List<User> findByRoleName(String roleName) {
         return userStore.findByRoleName(roleName);
     }
 

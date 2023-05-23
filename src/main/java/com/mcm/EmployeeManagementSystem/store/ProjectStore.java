@@ -10,17 +10,15 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class ProjectStore implements IProjectStore {
+public class ProjectStore {
 
     private final ProjectRepository repository;
     private final ProjectConverter converter;
 
-    @Override
     public Project save(Project project) {
         return converter.toModel(repository.save(converter.toEntity(project)));
     }
 
-    @Override
     public List<Project> findAll() {
         return converter.toModel(repository.findAll());
     }

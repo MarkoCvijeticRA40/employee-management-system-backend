@@ -6,22 +6,18 @@ import com.mcm.EmployeeManagementSystem.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import org.springframework.stereotype.Repository;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-public class UserStore implements IUserStore {
+public class UserStore {
 
     private final UserRepository repository;
     private final UserConverter converter;
 
-    @Override
     public User save(User user) {
         return converter.toModel(repository.save(converter.toEntity(user)));
     }
@@ -41,8 +37,7 @@ public class UserStore implements IUserStore {
     public boolean exists(String email) {
         return repository.existsByEmail(email);
     }
-  
-    @Override
+
     public List<User> findByRoleName(String roleName) {
         List<User> users = converter.toModel(repository.findAll());
         List<User> foundedUsers = new ArrayList<>();
@@ -59,7 +54,6 @@ public class UserStore implements IUserStore {
         return foundedUsers;
     }
 
-    @Override
     public List<User> findByTitle(String title) {
 
         List<User> users = converter.toModel(repository.findAll());
@@ -73,7 +67,6 @@ public class UserStore implements IUserStore {
         return foundedUsers;
     }
 
-    @Override
     public List<User> searchEngineers(String email, String name, String surname, LocalDateTime start, LocalDateTime end) {
         List<User> allEngineers = findByRoleName("Software engineer\n");
 
@@ -87,13 +80,12 @@ public class UserStore implements IUserStore {
         return filteredUsers;
     }
 
-    @Override
     public List<User> getAllEnabled() {
         List<User> users = converter.toModel(repository.findAll());
         List<User> filteredUsers = new ArrayList<>();
 
         for (User user : users) {
-            if(user.isAccountEnabled() == true) {
+            if (user.isAccountEnabled() == true) {
                 filteredUsers.add(user);
             }
         }
@@ -110,8 +102,7 @@ public class UserStore implements IUserStore {
         }
         return null;
     }
-
-    @Override
+    
     public List<User> getAllPotentialWorkers() {
         List<User> users = converter.toModel(repository.findAll());
         List<User> filteredUsers = new ArrayList<>();
@@ -119,7 +110,7 @@ public class UserStore implements IUserStore {
         for (User user : users) {
             boolean hasSEorPMRole = false;
             for (String role : user.getRoleNames()) {
-                if (role.equals("Software engineer\n")  || role.equals("Project manager")) {
+                if (role.equals("Software engineer\n") || role.equals("Project manager")) {
                     hasSEorPMRole = true;
                     break;
                 }

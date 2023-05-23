@@ -3,8 +3,10 @@ package com.mcm.EmployeeManagementSystem.converter;
 import com.mcm.EmployeeManagementSystem.entity.AddressEntity;
 import com.mcm.EmployeeManagementSystem.model.Address;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
+
 @Component
 public class AddressConverter implements GenericConverter<Address, AddressEntity> {
     @Override
