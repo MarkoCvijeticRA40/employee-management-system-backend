@@ -33,3 +33,5 @@ security:
     expiration: 900000
     refresh-token:
       expiration: 7200000
+    short-term-token:
+      expiration: 600000

@@ -11,7 +11,7 @@ import com.mcm.EmployeeManagementSystem.store.AddressStore;
 import com.mcm.EmployeeManagementSystem.store.RegistrationRequestStore;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.usecase.email.SendEmailUseCase;
-import com.mcm.EmployeeManagementSystem.usecase.hmac.GenerateActivationLinkUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.link.GenerateActivationLinkUseCase;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
 import com.mcm.EmployeeManagementSystem.validator.registrationrequest.ChangeRequestStatusValidator;
 import lombok.RequiredArgsConstructor;

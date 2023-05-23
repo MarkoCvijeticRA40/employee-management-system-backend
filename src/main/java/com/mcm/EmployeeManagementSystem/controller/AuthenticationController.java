@@ -2,14 +2,30 @@ package com.mcm.EmployeeManagementSystem.controller;
 
 import com.mcm.EmployeeManagementSystem.dto.AuthenticationRequest;
 import com.mcm.EmployeeManagementSystem.dto.AuthenticationResponse;
+import com.mcm.EmployeeManagementSystem.dto.PasswordlessAuthenticationRequest;
+import com.mcm.EmployeeManagementSystem.dto.Response;
+import com.mcm.EmployeeManagementSystem.handler.exceptions.InvalidLinkException;
+import com.mcm.EmployeeManagementSystem.handler.exceptions.InvalidTokenException;
+import com.mcm.EmployeeManagementSystem.handler.exceptions.TokenLinkIsAlreadyUsedException;
+import com.mcm.EmployeeManagementSystem.security.config.JwtService;
+import com.mcm.EmployeeManagementSystem.usecase.authentication.GenerateTokensUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.authentication.IsShortTermTokenValidUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.authentication.LoginUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.authentication.PasswordlessLoginUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.link.IsTokenLinkUsedUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.link.SetTokenLinkToUsedUseCase;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 @Getter
 @Setter
@@ -18,9 +34,46 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthenticationController {
     private final LoginUseCase loginUseCase;
+    private final PasswordlessLoginUseCase passwordlessLoginUseCase;
+    private final VerifyHmacUseCase verifyHmacUseCase;
+    private final IsTokenLinkUsedUseCase isTokenLinkUsedUseCase;
+    private final SetTokenLinkToUsedUseCase setTokenLinkToUsedUseCase;
+    private final IsShortTermTokenValidUseCase isShortTermTokenValidUseCase;
+    private final JwtService jwtService;
+    private final GenerateTokensUseCase generateTokensUseCase;
 
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody AuthenticationRequest request) {
         return loginUseCase.authenticate(request);
     }
+
+    @GetMapping("/generate-sttoken")
+    public Response generate(@RequestBody PasswordlessAuthenticationRequest request) throws NoSuchAlgorithmException, InvalidKeyException {
+        return passwordlessLoginUseCase.login(request);
+    }
+
+    @GetMapping("/verify-sttoken")
+    public ResponseEntity<AuthenticationResponse> verify(@RequestParam("token") String token, @RequestParam("hmac") String hmac) throws NoSuchAlgorithmException, InvalidKeyException {
+        String dataToSign = token;
+        URI redirectUrl = URI.create("");
+        if (verifyHmacUseCase.verify(dataToSign, hmac)) {
+            String tokenLink = "http://localhost:8080/auth/verify-sttoken?token=" + token + "&hmac=" + hmac;
+            if (!isTokenLinkUsedUseCase.isUsed(tokenLink)) {
+                setTokenLinkToUsedUseCase.setToUsed(tokenLink);
+                if (isShortTermTokenValidUseCase.isValid(token)) {
+                    AuthenticationResponse response = generateTokensUseCase.generate(token);
+                    HttpHeaders responseHeaders = new HttpHeaders();
+                    responseHeaders.setLocation(redirectUrl);
+                    return new ResponseEntity<>(response, responseHeaders, HttpStatus.OK);
+                } else {
+                    throw new InvalidTokenException();
+                }
+            } else {
+                throw new TokenLinkIsAlreadyUsedException();
+            }
+        } else {
+            throw new InvalidLinkException();
+        }
+    }
+
 }

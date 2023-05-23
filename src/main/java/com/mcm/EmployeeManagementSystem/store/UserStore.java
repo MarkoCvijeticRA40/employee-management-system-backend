@@ -27,4 +27,8 @@ public class UserStore {
     public User find(String email) {
         return converter.toModel(repository.findUserByEmail(email));
     }
+
+    public boolean exists(String email) {
+        return repository.existsByEmail(email);
+    }
 }

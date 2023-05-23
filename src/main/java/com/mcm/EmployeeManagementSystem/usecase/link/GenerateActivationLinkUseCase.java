@@ -1,4 +1,4 @@
-package com.mcm.EmployeeManagementSystem.usecase.hmac;
+package com.mcm.EmployeeManagementSystem.usecase.link;
 
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.ConvertToSecretKeyUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.GenerateHMACUseCase;

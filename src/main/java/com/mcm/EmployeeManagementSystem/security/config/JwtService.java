@@ -23,6 +23,8 @@ public class JwtService {
     private long jwtExpiration;
     @Value("${security.jwt.refresh-token.expiration}")
     private long refreshExpiration;
+    @Value("${security.jwt.short-term-token.expiration}")
+    private long shortTermExpiration;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -48,6 +50,10 @@ public class JwtService {
             UserDetails userDetails
     ) {
         return buildToken(new HashMap<>(), userDetails, refreshExpiration);
+    }
+
+    public String generateShortTermToken(UserDetails userDetails) {
+        return buildToken(new HashMap<>(), userDetails, shortTermExpiration);
     }
 
     private String buildToken(
