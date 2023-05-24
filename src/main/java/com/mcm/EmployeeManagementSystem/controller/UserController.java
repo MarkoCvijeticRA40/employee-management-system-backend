@@ -2,17 +2,14 @@ package com.mcm.EmployeeManagementSystem.controller;
 
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
-import com.mcm.EmployeeManagementSystem.usecase.CreateUserUseCase;
-import com.mcm.EmployeeManagementSystem.usecase.UserSearchUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.IsActivationLinkUsedUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.SetLinkToUsedUseCase;
-import com.mcm.EmployeeManagementSystem.usecase.user.ActivateAccountUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.user.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
@@ -32,9 +29,14 @@ public class UserController {
     private final ActivateAccountUseCase activateAccountUseCase;
     private final IsActivationLinkUsedUseCase isActivationLinkUsedUseCase;
     private final SetLinkToUsedUseCase setLinkToUsedUseCase;
-    private final CreateUserUseCase createUserUseCase;
-    private final UserSearchUseCase searchUserUseCase;
     private final UserStore store;
+    private final EditAdministratorProfileUseCase editAdministratorProfileUseCase;
+    private final CreateAdministratorProfileUseCase createAdministratorProfileUseCase;
+    private final FindByRoleNameUseCase findByRoleNameUseCase;
+    private final SearchUsersUseCase searchUsersUseCase;
+    private final FindByTitleUseCase findByTitleUseCase;
+    private final GetAllEnabledUseCase getAllEnabledUseCase;
+    private final FindPotentialEmployeeUseCase findPotentialEmployeeUseCase;
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("user") String userId,
@@ -61,26 +63,25 @@ public class UserController {
         }
     }
 
-
     @GetMapping("rolename")
     public List<User> findByRoleName(@RequestParam String roleName) {
-        return searchUserUseCase.findByRoleName(roleName);
+        return findByRoleNameUseCase.findByRoleName(roleName);
     }
 
     @GetMapping("title")
     public List<User> findByTitle(@RequestParam String title) {
-        return searchUserUseCase.findByTitle(title);
+        return findByTitleUseCase.findByTitle(title);
     }
 
     @GetMapping("enabled")
     public List<User> getAllEnabled() {
-        return store.getAllEnabled();
+        return getAllEnabledUseCase.getAllEnabled();
     }
 
     //Dobavljam samo potencijalne iznenjere i menadzere za neki projekat.Administratori i HR menadzeri ne rade direktno na projektu
     @GetMapping("potential/workers")
     public List<User> getAllPotentialWorkers() {
-        return store.getAllPotentialWorkers();
+        return findPotentialEmployeeUseCase.getAllPotentialWorkers();
     }
 
     @GetMapping("/{id}")
@@ -92,13 +93,12 @@ public class UserController {
 
     @PutMapping("/update")
     public User updateUser(@RequestBody User user) {
-        return store.save(user);
+        return editAdministratorProfileUseCase.updateAdministrator(user);
     }
 
     @PostMapping("/register/administrator")
     public User registerUser(@RequestBody User user) {
-        user.setAccountEnabled(false);
-        return createUserUseCase.save(user);
+        return createAdministratorProfileUseCase.register(user);
     }
 
     @GetMapping("/search/engineers/{email}/{name}/{surname}/{startDate}/{endDate}")
@@ -109,7 +109,7 @@ public class UserController {
         ZonedDateTime parsedEndDate = ZonedDateTime.parse(endDate, formatter);
         LocalDateTime localParsedStartDate = parsedStartDate.toLocalDateTime();
         LocalDateTime localParsedEndDate = parsedEndDate.toLocalDateTime();
-        return searchUserUseCase.searchEngineers(email, name, surname, localParsedStartDate, localParsedEndDate);
+        return searchUsersUseCase.searchEngineers(email, name, surname, localParsedStartDate, localParsedEndDate);
     }
 }
 
