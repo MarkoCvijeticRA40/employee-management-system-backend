@@ -18,15 +18,16 @@ public class FindPotentialEmployeeUseCase {
     private final UserStore userStore;
     private final UserRepository userRepository;
     private final UserConverter converter;
+    private final  GetAllEnabledUseCase getAllEnabledUseCase;
 
     public List<User> getAllPotentialWorkers() {
-        List<User> users = converter.toModel(userRepository.findAll());
+        List<User> users = getAllEnabledUseCase.getAllEnabled();
         List<User> filteredUsers = new ArrayList<>();
 
         for (User user : users) {
             boolean hasSEorPMRole = false;
             for (String role : user.getRoleNames()) {
-                if (role.equals("Software engineer\n") || role.equals("Project manager")) {
+                if (role.equals("Software engineer") || role.equals("Project manager")) {
                     hasSEorPMRole = true;
                     break;
                 }
