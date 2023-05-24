@@ -48,7 +48,7 @@ public class UserController {
                 return "Activation link has expired.";
             }
 
-            String activationLink = "http://localhost:8080/users/activate?user=" + userId + "&expires=" + expirationString + "&hmac=" + hmac;
+            String activationLink = "http://localhost:443/users/activate?user=" + userId + "&expires=" + expirationString + "&hmac=" + hmac;
             if (!isActivationLinkUsedUseCase.isUsed(activationLink)) {
                 activateAccountUseCase.activate(Long.valueOf(userId));
                 setLinkToUsedUseCase.setToUsed(activationLink);
