@@ -17,10 +17,11 @@ public class FindByTitleUseCase {
     private final UserStore userStore;
     private final UserRepository userRepository;
     private final UserConverter converter;
+    private final GetAllEnabledUseCase getAllEnabledUseCase;
 
     public List<User> findByTitle(String title) {
 
-        List<User> users = converter.toModel(userRepository.findAll());
+        List<User> users = getAllEnabledUseCase.getAllEnabled();
         List<User> foundedUsers = new ArrayList<>();
 
         for (User user : users) {

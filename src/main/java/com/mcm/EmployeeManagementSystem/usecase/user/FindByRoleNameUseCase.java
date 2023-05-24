@@ -15,9 +15,10 @@ public class FindByRoleNameUseCase {
 
     private final UserRepository userRepository;
     private final UserConverter converter;
+    private final GetAllEnabledUseCase getAllEnabledUseCase;
 
     public List<User> findByRoleName(String roleName) {
-        List<User> users = converter.toModel(userRepository.findAll());
+        List<User> users = getAllEnabledUseCase.getAllEnabled();
         List<User> foundedUsers = new ArrayList<>();
 
         for (User user : users) {

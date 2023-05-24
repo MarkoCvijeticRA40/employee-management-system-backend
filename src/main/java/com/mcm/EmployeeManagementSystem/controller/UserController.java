@@ -1,5 +1,6 @@
 package com.mcm.EmployeeManagementSystem.controller;
 
+import com.mcm.EmployeeManagementSystem.model.Address;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
@@ -9,12 +10,14 @@ import com.mcm.EmployeeManagementSystem.usecase.user.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,6 +40,7 @@ public class UserController {
     private final FindByTitleUseCase findByTitleUseCase;
     private final GetAllEnabledUseCase getAllEnabledUseCase;
     private final FindPotentialEmployeeUseCase findPotentialEmployeeUseCase;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("user") String userId,
