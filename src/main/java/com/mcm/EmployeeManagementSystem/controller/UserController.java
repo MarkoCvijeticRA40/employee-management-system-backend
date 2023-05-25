@@ -1,5 +1,6 @@
 package com.mcm.EmployeeManagementSystem.controller;
 
+import com.mcm.EmployeeManagementSystem.dto.Response;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
@@ -37,6 +38,9 @@ public class UserController {
     private final FindByTitleUseCase findByTitleUseCase;
     private final GetAllEnabledUseCase getAllEnabledUseCase;
     private final FindPotentialEmployeeUseCase findPotentialEmployeeUseCase;
+    private final FindUserUseCase findUserUseCase;
+    private final EditEngineerUseCase editEngineerUseCase;
+    private final DeleteEngineerUseCase deleteEngineerUseCase;
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("user") String userId,
@@ -110,6 +114,21 @@ public class UserController {
         LocalDateTime localParsedStartDate = parsedStartDate.toLocalDateTime();
         LocalDateTime localParsedEndDate = parsedEndDate.toLocalDateTime();
         return searchUsersUseCase.searchEngineers(email, name, surname, localParsedStartDate, localParsedEndDate);
+    }
+
+    @GetMapping("/{id}/engineer")
+    public Response findById(@PathVariable Long id) {
+        return findUserUseCase.find(id);
+    }
+
+    @PutMapping("/{id}/engineer")
+    public Response update(@PathVariable Long id, @RequestBody User user) {
+        return editEngineerUseCase.update(id, user);
+    }
+
+    @DeleteMapping("/{id}/engineer")
+    public Response delete(@PathVariable Long id) {
+        return deleteEngineerUseCase.delete(id);
     }
 }
 

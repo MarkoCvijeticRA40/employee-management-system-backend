@@ -1,6 +1,7 @@
 package com.mcm.EmployeeManagementSystem.store;
 
 import com.mcm.EmployeeManagementSystem.converter.UserConverter;
+import com.mcm.EmployeeManagementSystem.model.Skill;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -46,5 +47,9 @@ public class UserStore {
             }
         }
         return null;
+    }
+
+    public void delete(User user) {
+        repository.delete(converter.toEntity(user));
     }
 }

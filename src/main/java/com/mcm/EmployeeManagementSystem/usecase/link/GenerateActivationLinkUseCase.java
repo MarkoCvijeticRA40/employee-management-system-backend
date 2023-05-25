@@ -26,7 +26,7 @@ public class GenerateActivationLinkUseCase {
         String dataToSign = userId + expirationString;
         String hmac = generateHMACUseCase.generate(dataToSign, convertToSecretKeyUseCase.convert(secretKeyBase64));
 
-        return UriComponentsBuilder.fromUriString("http://localhost:443/users/activate")
+        return UriComponentsBuilder.fromUriString("https://localhost:443/users/activate")
                 .queryParam("user", userId)
                 .queryParam("expires", expirationString)
                 .queryParam("hmac", hmac)
