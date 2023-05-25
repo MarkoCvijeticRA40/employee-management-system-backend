@@ -10,6 +10,7 @@ import com.mcm.EmployeeManagementSystem.usecase.user.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -41,6 +42,8 @@ public class UserController {
     private final FindUserUseCase findUserUseCase;
     private final EditEngineerUseCase editEngineerUseCase;
     private final DeleteEngineerUseCase deleteEngineerUseCase;
+
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("user") String userId,

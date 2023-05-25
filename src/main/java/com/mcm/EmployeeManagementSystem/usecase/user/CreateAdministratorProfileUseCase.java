@@ -15,8 +15,11 @@ public class CreateAdministratorProfileUseCase {
     private final UserStore userStore;
 
     public User register(User administrator) {
-        administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
-        administrator.setAccountEnabled(false);
-        return userStore.save(administrator);
+        if(userStore.exists(administrator.getEmail()) == false){
+            administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
+            administrator.setAccountEnabled(false);
+            return userStore.save(administrator);
+        }
+        return null;
     }
 }
