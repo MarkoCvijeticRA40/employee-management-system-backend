@@ -19,7 +19,6 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
-//    private final LogoutHandler logoutHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -45,26 +44,24 @@ public class SecurityConfig {
                         "/swagger-ui.html"
                 )
                 .permitAll()
-//                .requestMatchers(GET, "/api/administrator").hasRole("ADMINISTRATOR")
-//                .requestMatchers(GET, "/api/administrator").hasAnyAuthority("read")
 
+                .requestMatchers("/roles/**").hasRole("Administrator")
+                .requestMatchers("/roles/**").hasAnyAuthority("update")
 
-//                .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
-//
-//
-//                .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
-//                .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
-//                .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
-//                .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
+                .requestMatchers("/auth/**").permitAll()
 
+                .requestMatchers("/request/register").permitAll()
 
-                /* .requestMatchers("/api/v1/admin/**").hasRole(ADMIN.name())
+                .requestMatchers("/request/pending").hasRole("Administrator")
+                .requestMatchers("/request/pending").hasAuthority("read")
 
-                 .requestMatchers(GET, "/api/v1/admin/**").hasAuthority(ADMIN_READ.name())
-                 .requestMatchers(POST, "/api/v1/admin/**").hasAuthority(ADMIN_CREATE.name())
-                 .requestMatchers(PUT, "/api/v1/admin/**").hasAuthority(ADMIN_UPDATE.name())
-                 .requestMatchers(DELETE, "/api/v1/admin/**").hasAuthority(ADMIN_DELETE.name())*/
+                .requestMatchers("/request/approve/**").hasRole("Administrator")
+                .requestMatchers("/request/approve/**").hasAnyAuthority("update")
 
+                .requestMatchers("/request/reject/**").hasRole("Administrator")
+                .requestMatchers("/request/reject/**").hasAnyAuthority("update")
+
+                .requestMatchers("/users/activate").permitAll()
 
                 .anyRequest()
                 .permitAll()
@@ -73,12 +70,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-//                .logout()
-//                .logoutUrl("/logout")
-//                .addLogoutHandler(logoutHandler)
-//                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-        ;
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
 

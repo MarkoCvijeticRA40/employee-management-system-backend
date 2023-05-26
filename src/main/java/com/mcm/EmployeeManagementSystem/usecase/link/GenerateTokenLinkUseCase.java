@@ -21,7 +21,7 @@ public class GenerateTokenLinkUseCase {
     public String generateTokenLink(String token) throws NoSuchAlgorithmException, InvalidKeyException {
         String hmac = generateHMACUseCase.generate(token, convertToSecretKeyUseCase.convert(secretKeyBase64));
 
-        return UriComponentsBuilder.fromUriString("http://localhost:443/auth/verify-sttoken")
+        return UriComponentsBuilder.fromUriString("https://localhost:443/auth/verify-sttoken")
                 .queryParam("token", token)
                 .queryParam("hmac", hmac)
                 .toUriString();

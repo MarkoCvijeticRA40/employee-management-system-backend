@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
+
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
@@ -50,7 +51,7 @@ public class UserController {
                 return "Activation link has expired.";
             }
 
-            String activationLink = "http://localhost:443/users/activate?user=" + userId + "&expires=" + expirationString + "&hmac=" + hmac;
+            String activationLink = "https://localhost:443/users/activate?user=" + userId + "&expires=" + expirationString + "&hmac=" + hmac;
             if (!isActivationLinkUsedUseCase.isUsed(activationLink)) {
                 activateAccountUseCase.activate(Long.valueOf(userId));
                 setLinkToUsedUseCase.setToUsed(activationLink);
