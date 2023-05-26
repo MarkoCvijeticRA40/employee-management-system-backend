@@ -42,6 +42,7 @@ public class UserController {
     private final FindUserUseCase findUserUseCase;
     private final EditEngineerUseCase editEngineerUseCase;
     private final DeleteEngineerUseCase deleteEngineerUseCase;
+    private final EditProjectManagerUseCase editProjectManagerUseCase;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -57,7 +58,7 @@ public class UserController {
                 return "Activation link has expired.";
             }
 
-            String activationLink = "http://localhost:443/users/activate?user=" + userId + "&expires=" + expirationString + "&hmac=" + hmac;
+            String activationLink = "https://localhost:443/users/activate?user=" + userId + "&expires=" + expirationString + "&hmac=" + hmac;
             if (!isActivationLinkUsedUseCase.isUsed(activationLink)) {
                 activateAccountUseCase.activate(Long.valueOf(userId));
                 setLinkToUsedUseCase.setToUsed(activationLink);
@@ -125,13 +126,18 @@ public class UserController {
     }
 
     @PutMapping("/{id}/engineer")
-    public Response update(@PathVariable Long id, @RequestBody User user) {
+    public Response updateEngineer(@PathVariable Long id, @RequestBody User user) {
         return editEngineerUseCase.update(id, user);
     }
 
     @DeleteMapping("/{id}/engineer")
     public Response delete(@PathVariable Long id) {
         return deleteEngineerUseCase.delete(id);
+    }
+
+    @PutMapping("/{id}/project-manager")
+    public Response updateProjectManager(@PathVariable Long id, @RequestBody User user) {
+        return editProjectManagerUseCase.update(id, user);
     }
 }
 

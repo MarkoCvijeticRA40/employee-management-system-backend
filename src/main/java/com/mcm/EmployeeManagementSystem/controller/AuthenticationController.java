@@ -52,7 +52,7 @@ public class AuthenticationController {
         String dataToSign = token;
         URI redirectUrl = URI.create("");
         if (verifyHmacUseCase.verify(dataToSign, hmac)) {
-            String tokenLink = "http://localhost:443/auth/verify-sttoken?token=" + token + "&hmac=" + hmac;
+            String tokenLink = "https://localhost:443/auth/verify-sttoken?token=" + token + "&hmac=" + hmac;
             if (!isTokenLinkUsedUseCase.isUsed(tokenLink)) {
                 setTokenLinkToUsedUseCase.setToUsed(tokenLink);
                 if (isShortTermTokenValidUseCase.isValid(token)) {
