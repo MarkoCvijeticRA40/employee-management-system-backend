@@ -3,9 +3,9 @@ package com.mcm.EmployeeManagementSystem.usecase.user;
 import com.mcm.EmployeeManagementSystem.converter.UserConverter;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.repository.UserRepository;
-import com.mcm.EmployeeManagementSystem.store.UserStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 

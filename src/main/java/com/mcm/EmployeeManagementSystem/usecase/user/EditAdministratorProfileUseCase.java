@@ -15,17 +15,16 @@ public class EditAdministratorProfileUseCase {
     private final UserStore userStore;
 
     public User updateAdministrator(User administrator) {
-        if(IsAdministratorPasswordChanged(administrator.getPassword(),administrator.getId()) == true  )
-        {
+        if (IsAdministratorPasswordChanged(administrator.getPassword(), administrator.getId()) == true) {
             administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
             return userStore.save(administrator);
         }
         return userStore.save(administrator);
     }
 
-    public boolean IsAdministratorPasswordChanged(String password,Long id) {
+    public boolean IsAdministratorPasswordChanged(String password, Long id) {
         User administrator = userStore.getById(id);
-        if(administrator.getPassword().equals(password)) {
+        if (administrator.getPassword().equals(password)) {
             return false;
         }
         return true;
