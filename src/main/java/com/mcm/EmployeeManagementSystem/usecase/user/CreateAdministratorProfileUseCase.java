@@ -16,8 +16,9 @@ public class CreateAdministratorProfileUseCase {
 
     public User register(User administrator) {
         if(userStore.exists(administrator.getEmail()) == false){
+            administrator.setStartOfWork(null);
             administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
-            administrator.setAccountEnabled(false);
+            administrator.setAccountEnabled(true);
             return userStore.save(administrator);
         }
         return null;
