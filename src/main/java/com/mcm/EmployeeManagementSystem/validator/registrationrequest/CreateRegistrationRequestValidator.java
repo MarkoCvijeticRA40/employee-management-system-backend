@@ -9,6 +9,7 @@ import com.mcm.EmployeeManagementSystem.store.RegistrationRequestStore;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
 import com.mcm.EmployeeManagementSystem.validator.Validator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ import static org.apache.logging.log4j.util.Strings.isBlank;
 public class CreateRegistrationRequestValidator implements Validator<RegistrationRequest> {
     private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
     private final RegistrationRequestStore store;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public ValidationReport validate(RegistrationRequest registrationRequest) {

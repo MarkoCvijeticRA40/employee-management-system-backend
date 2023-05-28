@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/requests")
 public class RegistrationRequestController {
     private final CreateRequestUseCase createRequestUseCase;

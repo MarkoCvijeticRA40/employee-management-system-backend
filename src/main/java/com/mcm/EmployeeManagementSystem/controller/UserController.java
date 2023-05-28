@@ -45,6 +45,7 @@ public class UserController {
     private final DeleteEngineerUseCase deleteEngineerUseCase;
 
     private final PasswordEncoder passwordEncoder;
+    private final FindUserByEmailUseCase findUserByEmailUseCase;
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("user") String userId,
@@ -92,7 +93,7 @@ public class UserController {
         return findPotentialEmployeeUseCase.getAllPotentialWorkers();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("email/{id}")
     public User getByEmail(@PathVariable int id) {
         Long Id = (long) id;
         User user = store.getById(Id);
@@ -133,6 +134,11 @@ public class UserController {
     @DeleteMapping("/{id}/engineer")
     public Response delete(@PathVariable Long id) {
         return deleteEngineerUseCase.delete(id);
+    }
+
+    @GetMapping("find/{email}")
+    public Response user(@PathVariable String email) {
+        return findUserByEmailUseCase.find(email);
     }
 }
 

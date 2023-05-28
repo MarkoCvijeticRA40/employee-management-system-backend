@@ -25,6 +25,7 @@ import java.security.NoSuchAlgorithmException;
 @Setter
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/auth")
 public class AuthenticationController {
     private final LoginUseCase loginUseCase;
@@ -42,24 +43,31 @@ public class AuthenticationController {
         return loginUseCase.authenticate(request);
     }
 
-    @GetMapping("/generate-sttoken")
-    public Response generate(@RequestBody PasswordlessAuthenticationRequest request) throws NoSuchAlgorithmException, InvalidKeyException {
-        return passwordlessLoginUseCase.login(request);
+    @GetMapping("/generate-sttoken/{email}")
+    public Response generate(@PathVariable String email) throws NoSuchAlgorithmException, InvalidKeyException {
+        return passwordlessLoginUseCase.login(email);
     }
 
     @GetMapping("/verify-sttoken")
-    public ResponseEntity<AuthenticationResponse> verify(@RequestParam("token") String token, @RequestParam("hmac") String hmac) throws NoSuchAlgorithmException, InvalidKeyException {
+    public ResponseEntity<GenerateTokensResponse> verify(@RequestParam("token") String token, @RequestParam("hmac") String hmac) throws NoSuchAlgorithmException, InvalidKeyException {
         String dataToSign = token;
-        URI redirectUrl = URI.create("");
         if (verifyHmacUseCase.verify(dataToSign, hmac)) {
             String tokenLink = "https://localhost:443/auth/verify-sttoken?token=" + token + "&hmac=" + hmac;
             if (!isTokenLinkUsedUseCase.isUsed(tokenLink)) {
                 setTokenLinkToUsedUseCase.setToUsed(tokenLink);
                 if (isShortTermTokenValidUseCase.isValid(token)) {
-                    AuthenticationResponse response = generateTokensUseCase.generate(token);
+                    GenerateTokensResponse response = generateTokensUseCase.generate(token);
                     HttpHeaders responseHeaders = new HttpHeaders();
-                    responseHeaders.setLocation(redirectUrl);
-                    return new ResponseEntity<>(response, responseHeaders, HttpStatus.OK);
+                    if (response.getRoleName().equals("Administrator")) {
+                        responseHeaders.setLocation(URI.create("http://localhost:4200/administrator/welcome/" + response.getAccessToken() + "/" + response.getRefreshToken() + "/" + response.getEmail()));
+                    } else if (response.getRoleName().equals("Software engineer")) {
+                        responseHeaders.setLocation(URI.create("http://localhost:4200/softwareengineer/welcome/" + response.getAccessToken() + "/" + response.getRefreshToken() + "/" + response.getEmail()));
+                    } else if (response.getRoleName().equals("Project manager")) {
+                        responseHeaders.setLocation(URI.create("http://localhost:4200/projectmanager/welcome/" + response.getAccessToken() + "/" + response.getRefreshToken() + "/" + response.getEmail()));
+                    } else if (response.getRoleName().equals("HR manager")) {
+                        responseHeaders.setLocation(URI.create("http://localhost:4200/hrmanager/welcome/" + response.getAccessToken() + "/" + response.getRefreshToken() + "/" + response.getEmail()));
+                    }
+                    return new ResponseEntity<>(responseHeaders, HttpStatus.SEE_OTHER);
                 } else {
                     throw new InvalidTokenException();
                 }
@@ -71,9 +79,9 @@ public class AuthenticationController {
         }
     }
 
-    @GetMapping("/refresh-token")
-    public Response refresh(@RequestBody RefreshTokenRequest request) throws NoSuchAlgorithmException, InvalidKeyException {
-        return refreshTokenUseCase.refresh(request.getRefreshToken());
+    @GetMapping("/refresh-token/{refreshToken}")
+    public Response refresh(@PathVariable String refreshToken) throws NoSuchAlgorithmException, InvalidKeyException {
+        return refreshTokenUseCase.refresh(refreshToken);
     }
 
 }
