@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Setter
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/assignments")
 public class ProjectUserAssignmentController {
     private final FindByUserUseCase findByUserIdUseCase;
