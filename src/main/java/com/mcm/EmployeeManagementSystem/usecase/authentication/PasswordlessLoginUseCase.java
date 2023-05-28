@@ -34,10 +34,10 @@ public class PasswordlessLoginUseCase {
     private final SendEmailUseCase sendEmailUseCase;
     private final TokenLinkStore tokenLinkStore;
 
-    public Response login(PasswordlessAuthenticationRequest request) throws NoSuchAlgorithmException, InvalidKeyException {
-        ValidationReport report = validator.validate(request.getEmail());
+    public Response login(String email) throws NoSuchAlgorithmException, InvalidKeyException {
+        ValidationReport report = validator.validate(email);
         if (report.isValid()) {
-            User user = userStore.find(request.getEmail());
+            User user = userStore.find(email);
             var shortTermToken = jwtService.generateShortTermToken(userConverter.toEntity(user));
             revokeAllUserTokensUseCase.revokeAllUserTokens(userConverter.toEntity(user));
             saveUserTokenUseCase.saveUserToken(userConverter.toEntity(user), shortTermToken);
@@ -47,7 +47,7 @@ public class PasswordlessLoginUseCase {
             tokenLinkStore.save(tokenLink);
         }
 
-        return new Response(report, request.getEmail());
+        return new Response(report, email);
     }
 
 }

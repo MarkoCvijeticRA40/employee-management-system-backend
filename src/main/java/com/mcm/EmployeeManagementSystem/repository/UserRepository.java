@@ -2,6 +2,7 @@ package com.mcm.EmployeeManagementSystem.repository;
 
 import com.mcm.EmployeeManagementSystem.entity.UserEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends EntityRepository<UserEntity> {
