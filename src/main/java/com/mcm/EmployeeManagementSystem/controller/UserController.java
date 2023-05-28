@@ -43,6 +43,7 @@ public class UserController {
     private final FindUserUseCase findUserUseCase;
     private final EditEngineerUseCase editEngineerUseCase;
     private final DeleteEngineerUseCase deleteEngineerUseCase;
+    private final EditProjectManagerUseCase editProjectManagerUseCase;
 
     private final PasswordEncoder passwordEncoder;
     private final FindUserByEmailUseCase findUserByEmailUseCase;
@@ -127,7 +128,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/engineer")
-    public Response update(@PathVariable Long id, @RequestBody User user) {
+    public Response updateEngineer(@PathVariable Long id, @RequestBody User user) {
         return editEngineerUseCase.update(id, user);
     }
 
@@ -139,6 +140,11 @@ public class UserController {
     @GetMapping("find/{email}")
     public Response user(@PathVariable String email) {
         return findUserByEmailUseCase.find(email);
+    }
+  
+    @PutMapping("/{id}/project-manager")
+    public Response updateProjectManager(@PathVariable Long id, @RequestBody User user) {
+        return editProjectManagerUseCase.update(id, user);
     }
 }
 
