@@ -76,9 +76,11 @@ public class SecurityConfig {
 //                ))
                 .requestMatchers("/request/reject/**").permitAll()
 
-                .requestMatchers("/users/activate").permitAll()
+                //.requestMatchers("/users/activate").permitAll()
 
-                .requestMatchers("/users/find/**").permitAll()
+                .requestMatchers("/users/**").permitAll()
+
+                //.requestMatchers("/users/find/**").permitAll()
 
 //                .requestMatchers("/projects/**").access(AuthorizationManagers.allOf(
 //                        AuthorityAuthorizationManager.hasAnyAuthority("admin_update", "admin_read", "admin_create"),
@@ -102,40 +104,40 @@ public class SecurityConfig {
 //                        AuthorityAuthorizationManager.hasAnyAuthority("admin_read"),
 //                        AuthorityAuthorizationManager.hasRole("Administrator")
 //                ))
-                .requestMatchers("/users/rolename").permitAll()
+                //.requestMatchers("/users/rolename").permitAll()
 
 //                .requestMatchers("/users/enabled").access(AuthorizationManagers.allOf(
 //                        AuthorityAuthorizationManager.hasAnyAuthority("admin_read"),
 //                        AuthorityAuthorizationManager.hasRole("Administrator")
 //                ))
-                .requestMatchers("/users/enabled").permitAll()
+                //.requestMatchers("/users/enabled").permitAll()
 
 //                .requestMatchers("/users/potential/workers").access(AuthorizationManagers.allOf(
 //                        AuthorityAuthorizationManager.hasAnyAuthority("admin_read"),
 //                        AuthorityAuthorizationManager.hasRole("Administrator")
 //                ))
-                .requestMatchers("/users/potential/workers").permitAll()
+                //.requestMatchers("/users/potential/workers").permitAll()
 
-                .requestMatchers("/users/email/**").permitAll()
+                //.requestMatchers("/users/email/**").permitAll()
 
 //                .requestMatchers("/users/update").access(AuthorizationManagers.allOf(
 //                        AuthorityAuthorizationManager.hasAnyAuthority("admin_update"),
 //                        AuthorityAuthorizationManager.hasRole("Administrator")
 //                ))
-                .requestMatchers("/users/update").permitAll()
+                //.requestMatchers("/users/update").permitAll()
 
 //                .requestMatchers("/users/register/administrator").access(AuthorizationManagers.allOf(
 //                        AuthorityAuthorizationManager.hasAnyAuthority("admin_create"),
 //                        AuthorityAuthorizationManager.hasRole("Administrator")
 //                ))
 
-                .requestMatchers("/users/register/administrator").permitAll()
+                //.requestMatchers("/users/register/administrator").permitAll()
 
 //                .requestMatchers("/users/search/engineers/**").access(AuthorizationManagers.allOf(
 //                        AuthorityAuthorizationManager.hasAnyAuthority("admin_read"),
 //                        AuthorityAuthorizationManager.hasRole("Administrator")
 //                ))
-                .requestMatchers("/users/search/engineers/**").permitAll()
+                //.requestMatchers("/users/search/engineers/**").permitAll()
 
 //                .requestMatchers("/users/**/engineer").access(AuthorizationManagers.allOf(
 //                        AuthorityAuthorizationManager.hasAnyAuthority("swe_update", "swe_read", "swe_delete"),
