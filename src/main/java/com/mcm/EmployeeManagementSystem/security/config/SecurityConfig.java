@@ -63,76 +63,96 @@ public class SecurityConfig {
 //                ))
                 .requestMatchers("/request/pending").permitAll()
 
-                .requestMatchers("/request/approve/**").access(AuthorizationManagers.allOf(
-                        AuthorityAuthorizationManager.hasAuthority("admin_update"),
-                        AuthorityAuthorizationManager.hasRole("Administrator")
-                ))
 
-                .requestMatchers("/request/reject/**").access(AuthorizationManagers.allOf(
-                        AuthorityAuthorizationManager.hasAuthority("admin_update"),
-                        AuthorityAuthorizationManager.hasRole("Administrator")
-                ))
+//                .requestMatchers("/request/approve/**").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAuthority("admin_update"),
+//                        AuthorityAuthorizationManager.hasRole("Administrator")
+//                ))
+                .requestMatchers("/request/approve/**").permitAll()
 
-                .requestMatchers("/users/activate").permitAll()
+//                .requestMatchers("/request/reject/**").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAuthority("admin_update"),
+//                        AuthorityAuthorizationManager.hasRole("Administrator")
+//                ))
+                .requestMatchers("/request/reject/**").permitAll()
 
-                .requestMatchers("/users/find/**").permitAll()
+                //.requestMatchers("/users/activate").permitAll()
 
-                .requestMatchers("/projects/**").access(AuthorizationManagers.allOf(
-                        AuthorityAuthorizationManager.hasAnyAuthority("admin_update", "admin_read", "admin_create"),
-                        AuthorityAuthorizationManager.hasRole("Administrator")
-                ))
+                .requestMatchers("/users/**").permitAll()
 
-                .requestMatchers("/assignments/**").access(AuthorizationManagers.allOf(
-                        AuthorityAuthorizationManager.hasAnyAuthority("pm_update", "pm_read"),
-                        AuthorityAuthorizationManager.hasRole("Project manager")
-                ))
+                //.requestMatchers("/users/find/**").permitAll()
 
-                .requestMatchers("/skills/**").access(AuthorizationManagers.allOf(
-                        AuthorityAuthorizationManager.hasAnyAuthority("swe_update", "swe_read", "swe_create", "swe_delete"),
-                        AuthorityAuthorizationManager.hasRole("Software engineer")
-                ))
+//                .requestMatchers("/projects/**").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAnyAuthority("admin_update", "admin_read", "admin_create"),
+//                        AuthorityAuthorizationManager.hasRole("Administrator")
+//                ))
+                .requestMatchers("/projects/**").permitAll()
 
-                .requestMatchers("/users/rolename").access(AuthorizationManagers.allOf(
-                        AuthorityAuthorizationManager.hasAnyAuthority("admin_read"),
-                        AuthorityAuthorizationManager.hasRole("Administrator")
-                ))
+//                .requestMatchers("/assignments/**").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAnyAuthority("pm_update", "pm_read"),
+//                        AuthorityAuthorizationManager.hasRole("Project manager")
+//                ))
+                .requestMatchers("/assignments/**").permitAll()
 
-                .requestMatchers("/users/enabled").access(AuthorizationManagers.allOf(
-                        AuthorityAuthorizationManager.hasAnyAuthority("admin_read"),
-                        AuthorityAuthorizationManager.hasRole("Administrator")
-                ))
+//                .requestMatchers("/skills/**").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAnyAuthority("swe_update", "swe_read", "swe_create", "swe_delete"),
+//                        AuthorityAuthorizationManager.hasRole("Software engineer")
+//                ))
+                .requestMatchers("/skills/**").permitAll()
 
-                .requestMatchers("/users/potential/workers").access(AuthorizationManagers.allOf(
-                        AuthorityAuthorizationManager.hasAnyAuthority("admin_read"),
-                        AuthorityAuthorizationManager.hasRole("Administrator")
-                ))
+//                .requestMatchers("/users/rolename").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAnyAuthority("admin_read"),
+//                        AuthorityAuthorizationManager.hasRole("Administrator")
+//                ))
+                //.requestMatchers("/users/rolename").permitAll()
 
-                .requestMatchers("/users/email/**").permitAll()
+//                .requestMatchers("/users/enabled").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAnyAuthority("admin_read"),
+//                        AuthorityAuthorizationManager.hasRole("Administrator")
+//                ))
+                //.requestMatchers("/users/enabled").permitAll()
 
-                .requestMatchers("/users/update").access(AuthorizationManagers.allOf(
-                        AuthorityAuthorizationManager.hasAnyAuthority("admin_update"),
-                        AuthorityAuthorizationManager.hasRole("Administrator")
-                ))
+//                .requestMatchers("/users/potential/workers").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAnyAuthority("admin_read"),
+//                        AuthorityAuthorizationManager.hasRole("Administrator")
+//                ))
+                //.requestMatchers("/users/potential/workers").permitAll()
 
-                .requestMatchers("/users/register/administrator").access(AuthorizationManagers.allOf(
-                        AuthorityAuthorizationManager.hasAnyAuthority("admin_create"),
-                        AuthorityAuthorizationManager.hasRole("Administrator")
-                ))
+                //.requestMatchers("/users/email/**").permitAll()
 
-                .requestMatchers("/users/search/engineers/**").access(AuthorizationManagers.allOf(
-                        AuthorityAuthorizationManager.hasAnyAuthority("admin_read"),
-                        AuthorityAuthorizationManager.hasRole("Administrator")
-                ))
+//                .requestMatchers("/users/update").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAnyAuthority("admin_update"),
+//                        AuthorityAuthorizationManager.hasRole("Administrator")
+//                ))
+                //.requestMatchers("/users/update").permitAll()
 
-                .requestMatchers("/users/**/engineer").access(AuthorizationManagers.allOf(
-                        AuthorityAuthorizationManager.hasAnyAuthority("swe_update", "swe_read", "swe_delete"),
-                        AuthorityAuthorizationManager.hasRole("Software engineer")
-                ))
+//                .requestMatchers("/users/register/administrator").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAnyAuthority("admin_create"),
+//                        AuthorityAuthorizationManager.hasRole("Administrator")
+//                ))
+
+                //.requestMatchers("/users/register/administrator").permitAll()
+
+//                .requestMatchers("/users/search/engineers/**").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAnyAuthority("admin_read"),
+//                        AuthorityAuthorizationManager.hasRole("Administrator")
+//                ))
+                //.requestMatchers("/users/search/engineers/**").permitAll()
+
+//                .requestMatchers("/users/**/engineer").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAnyAuthority("swe_update", "swe_read", "swe_delete"),
+//                        AuthorityAuthorizationManager.hasRole("Software engineer")
+//                ))
+//
+//                .requestMatchers("/users/**/project-manager").access(AuthorizationManagers.allOf(
+//                        AuthorityAuthorizationManager.hasAnyAuthority("pm_update"),
+//                        AuthorityAuthorizationManager.hasRole("Project manager")
+//                ))
 
 
 
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
