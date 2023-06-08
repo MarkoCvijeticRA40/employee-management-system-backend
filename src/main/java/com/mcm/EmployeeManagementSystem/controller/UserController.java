@@ -13,7 +13,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
@@ -46,7 +45,6 @@ public class UserController {
     private final EditEngineerUseCase editEngineerUseCase;
     private final DeleteEngineerUseCase deleteEngineerUseCase;
     private final EditProjectManagerUseCase editProjectManagerUseCase;
-
     private final PasswordEncoder passwordEncoder;
     private final FindUserByEmailUseCase findUserByEmailUseCase;
 
@@ -90,7 +88,6 @@ public class UserController {
         return getAllEnabledUseCase.getAllEnabled();
     }
 
-    //Dobavljam samo potencijalne iznenjere i menadzere za neki projekat.Administratori i HR menadzeri ne rade direktno na projektu
     @GetMapping("potential/workers")
     public List<User> getAllPotentialWorkers() {
         return findPotentialEmployeeUseCase.getAllPotentialWorkers();
@@ -104,12 +101,12 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public User updateUser(@RequestBody User user) {
+    public Response updateAdministrator(@RequestBody User user) {
         return editAdministratorProfileUseCase.updateAdministrator(user);
     }
 
     @PostMapping("/register/administrator")
-    public User registerUser(@RequestBody User user) {
+    public Response registerUser(@RequestBody User user) {
         return createAdministratorProfileUseCase.register(user);
     }
 

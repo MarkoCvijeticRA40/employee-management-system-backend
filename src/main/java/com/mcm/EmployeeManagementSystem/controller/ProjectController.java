@@ -1,32 +1,35 @@
 package com.mcm.EmployeeManagementSystem.controller;
 
+import com.mcm.EmployeeManagementSystem.dto.Response;
 import com.mcm.EmployeeManagementSystem.model.Project;
 import com.mcm.EmployeeManagementSystem.model.ProjectUserAssignment;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.store.ProjectStore;
 import com.mcm.EmployeeManagementSystem.store.ProjectUserAssignmentStore;
+import com.mcm.EmployeeManagementSystem.usecase.project.AddEmployeeToProjectUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.project.CreateProjectUseCase;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
+@Setter
 @RestController
+@AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectStore store;
     private final ProjectUserAssignmentStore projectUserAssignmentStore;
-
-    public ProjectController(ProjectStore store, ProjectUserAssignmentStore projectUserAssignmentStore) {
-        this.store = store;
-        this.projectUserAssignmentStore = projectUserAssignmentStore;
-    }
+    private final CreateProjectUseCase createProjectUseCase;
+    private final AddEmployeeToProjectUseCase addEmployeeToProjectUseCase;
 
     @PostMapping("/create")
-    public Project createProject(@RequestBody Project project) {
-        return getNewProject(project);
-    }
+    public Response create(@RequestBody Project project) { return createProjectUseCase.create(project); }
 
     @GetMapping("")
     public List<Project> findAll() {
@@ -34,9 +37,9 @@ public class ProjectController {
     }
 
     @PutMapping("/update")
-    public Project updateProject(@RequestBody Project project) {
+    public Response updateProject(@RequestBody Project project) {
         createProjectUserAssignment(project);
-        return store.save(project);
+        return addEmployeeToProjectUseCase.update(project);
     }
 
     private Project getNewProject(Project project) {
