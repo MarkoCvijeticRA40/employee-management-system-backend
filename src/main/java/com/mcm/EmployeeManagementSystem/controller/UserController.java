@@ -8,6 +8,8 @@ import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.IsActivationLinkUsedUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.SetLinkToUsedUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.user.*;
+import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
+import com.mcm.EmployeeManagementSystem.validator.user.FindUsersValidator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,7 +40,6 @@ public class UserController {
     private final CreateAdministratorProfileUseCase createAdministratorProfileUseCase;
     private final FindByRoleNameUseCase findByRoleNameUseCase;
     private final SearchUsersUseCase searchUsersUseCase;
-    private final FindByTitleUseCase findByTitleUseCase;
     private final GetAllEnabledUseCase getAllEnabledUseCase;
     private final FindPotentialEmployeeUseCase findPotentialEmployeeUseCase;
     private final FindUserUseCase findUserUseCase;
@@ -47,6 +48,7 @@ public class UserController {
     private final EditProjectManagerUseCase editProjectManagerUseCase;
     private final PasswordEncoder passwordEncoder;
     private final FindUserByEmailUseCase findUserByEmailUseCase;
+    private final FindUsersValidator findUsersValidator;
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("user") String userId,
@@ -74,13 +76,8 @@ public class UserController {
     }
 
     @GetMapping("rolename")
-    public List<User> findByRoleName(@RequestParam String roleName) {
+    public Response findByRoleName(@RequestParam String roleName) {
         return findByRoleNameUseCase.findByRoleName(roleName);
-    }
-
-    @GetMapping("title")
-    public List<User> findByTitle(@RequestParam String title) {
-        return findByTitleUseCase.findByTitle(title);
     }
 
     @GetMapping("enabled")
@@ -111,7 +108,7 @@ public class UserController {
     }
 
     @GetMapping("/search/engineers/{email}/{name}/{surname}/{startDate}/{endDate}")
-    public List<User> searchEngineers(@PathVariable String email, @PathVariable String name, @PathVariable String surname, @PathVariable String startDate, @PathVariable String endDate
+    public Response searchEngineers(@PathVariable String email, @PathVariable String name, @PathVariable String surname, @PathVariable String startDate, @PathVariable String endDate
     ) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'X (zzzz)", Locale.ENGLISH);
         ZonedDateTime parsedStartDate = ZonedDateTime.parse(startDate, formatter);

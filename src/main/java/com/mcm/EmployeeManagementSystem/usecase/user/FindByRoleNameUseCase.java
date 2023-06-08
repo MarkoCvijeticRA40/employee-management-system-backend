@@ -1,35 +1,36 @@
 package com.mcm.EmployeeManagementSystem.usecase.user;
 
-import com.mcm.EmployeeManagementSystem.converter.UserConverter;
+import com.mcm.EmployeeManagementSystem.dto.Response;
 import com.mcm.EmployeeManagementSystem.model.User;
-import com.mcm.EmployeeManagementSystem.repository.UserRepository;
+import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
+import com.mcm.EmployeeManagementSystem.validator.user.FindUsersByRoleValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class FindByRoleNameUseCase {
 
-    private final UserRepository userRepository;
-    private final UserConverter converter;
     private final GetAllEnabledUseCase getAllEnabledUseCase;
+    private final FindUsersByRoleValidator validator;
 
-    public List<User> findByRoleName(String roleName) {
-        List<User> users = getAllEnabledUseCase.getAllEnabled();
-        List<User> foundedUsers = new ArrayList<>();
+    public Response findByRoleName(String roleName) {
+        ValidationReport report = validator.validate(roleName);
 
-        for (User user : users) {
-            List<String> roleNames = user.getRoleNames();
-            for (String role : roleNames) {
-                if (role.equals(roleName)) {
-                    foundedUsers.add(user); // Add the user to the foundedUsers list, not the users list
-                    break; // Exit the inner loop since the user is found
-                }
-            }
+        if (!report.isValid()) {
+            return new Response(report, new ArrayList<>());
         }
-        return foundedUsers;
+
+        List<User> users = getAllEnabledUseCase.getAllEnabled();
+
+        List<User> foundedUsers = users.stream()
+                .filter(user -> user.getRoleNames().contains(roleName))
+                .collect(Collectors.toList());
+
+        return new Response(report, foundedUsers);
     }
 }
