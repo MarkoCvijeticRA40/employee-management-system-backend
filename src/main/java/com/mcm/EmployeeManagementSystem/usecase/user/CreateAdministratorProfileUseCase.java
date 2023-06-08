@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class git CreateAdministratorProfileUseCase {
+public class CreateAdministratorProfileUseCase {
 
     private final PasswordEncoder passwordEncoder;
     private final UserStore userStore;
