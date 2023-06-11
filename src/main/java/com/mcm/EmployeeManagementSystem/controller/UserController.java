@@ -36,7 +36,7 @@ public class UserController {
     private final CreateAdministratorProfileUseCase createAdministratorProfileUseCase;
     private final FindByRoleNameUseCase findByRoleNameUseCase;
     private final SearchUsersUseCase searchUsersUseCase;
-    private final GetAllEnabledUseCase getAllEnabledUseCase;
+    private final FindUsersWithStartDateUseCase findUsersWithStartDateUseCase;
     private final FindPotentialEmployeeUseCase findPotentialEmployeeUseCase;
     private final FindUserUseCase findUserUseCase;
     private final EditEngineerUseCase editEngineerUseCase;
@@ -44,6 +44,8 @@ public class UserController {
     private final EditProjectManagerUseCase editProjectManagerUseCase;
     private final PasswordEncoder passwordEncoder;
     private final FindUserByEmailUseCase findUserByEmailUseCase;
+    private final BlockUserUseCase blockUserUseCase;
+    private final UnblockUserUseCase unblockUserUseCase;
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("user") String userId,
@@ -75,10 +77,8 @@ public class UserController {
         return findByRoleNameUseCase.findByRoleName(roleName);
     }
 
-    @GetMapping("enabled")
-    public List<User> getAllEnabled() {
-        return getAllEnabledUseCase.getAllEnabled();
-    }
+    @GetMapping("startdate")
+    public List<User> getAllWithStartDate() { return findUsersWithStartDateUseCase.findUsersWithStartDate(); }
 
     @GetMapping("potential/workers")
     public List<User> getAllPotentialWorkers() {
@@ -134,6 +134,16 @@ public class UserController {
     @PutMapping("/{id}/project-manager")
     public Response updateProjectManager(@PathVariable Long id, @RequestBody User user) {
         return editProjectManagerUseCase.update(id, user);
+    }
+
+    @PutMapping("/block")
+    public Response blockUser(@RequestBody User user) {
+        return blockUserUseCase.block(user);
+    }
+
+    @PutMapping("/unblock")
+    public Response unblockUser(@RequestBody User user) {
+        return unblockUserUseCase.unblock(user);
     }
 }
 
