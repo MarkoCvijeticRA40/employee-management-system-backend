@@ -1,15 +1,12 @@
 package com.mcm.EmployeeManagementSystem.controller;
 
 import com.mcm.EmployeeManagementSystem.dto.Response;
-import com.mcm.EmployeeManagementSystem.model.Address;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.IsActivationLinkUsedUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.SetLinkToUsedUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.user.*;
-import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
-import com.mcm.EmployeeManagementSystem.validator.user.FindUsersValidator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +17,6 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,7 +44,6 @@ public class UserController {
     private final EditProjectManagerUseCase editProjectManagerUseCase;
     private final PasswordEncoder passwordEncoder;
     private final FindUserByEmailUseCase findUserByEmailUseCase;
-    private final FindUsersValidator findUsersValidator;
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("user") String userId,
@@ -103,9 +98,7 @@ public class UserController {
     }
 
     @PostMapping("/register/administrator")
-    public Response registerUser(@RequestBody User user) {
-        return createAdministratorProfileUseCase.register(user);
-    }
+    public Response registerUser(@RequestBody User user) { return createAdministratorProfileUseCase.register(user); }
 
     @GetMapping("/search/engineers/{email}/{name}/{surname}/{startDate}/{endDate}")
     public Response searchEngineers(@PathVariable String email, @PathVariable String name, @PathVariable String surname, @PathVariable String startDate, @PathVariable String endDate
