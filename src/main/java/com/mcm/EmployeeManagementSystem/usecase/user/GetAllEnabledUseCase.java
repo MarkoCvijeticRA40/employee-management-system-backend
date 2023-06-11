@@ -23,7 +23,7 @@ public class GetAllEnabledUseCase {
         List<User> filteredUsers = new ArrayList<>();
 
         for (User user : users) {
-            if (user.isAccountEnabled() == true) {
+            if (user.isAccountEnabled() == true && user.getStartOfWork() != null) {
                 filteredUsers.add(user);
             }
         }

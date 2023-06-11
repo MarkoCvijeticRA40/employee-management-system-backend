@@ -1,12 +1,11 @@
 package com.mcm.EmployeeManagementSystem.store;
 
 import com.mcm.EmployeeManagementSystem.converter.UserConverter;
-import com.mcm.EmployeeManagementSystem.model.Skill;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -15,6 +14,7 @@ public class UserStore {
 
     private final UserRepository repository;
     private final UserConverter converter;
+    private final UserRepository userRepository;
 
     public User save(User user) {
         return converter.toModel(repository.save(converter.toEntity(user)));
@@ -46,6 +46,33 @@ public class UserStore {
         return null;
     }
 
+    public List<User> getAllEnabled() {
+        List<User> users = converter.toModel(userRepository.findAll());
+        List<User> filteredUsers = new ArrayList<>();
+
+        for (User user : users) {
+            if (user.isAccountEnabled() == true) {
+                filteredUsers.add(user);
+            }
+        }
+        return filteredUsers;
+    }
+
+    public List<User> findByRoleName(String roleName) {
+        List<User> users = getAllEnabled();
+        List<User> foundedUsers = new ArrayList<>();
+
+        for (User user : users) {
+            List<String> roleNames = user.getRoleNames();
+            for (String role : roleNames) {
+                if (role.equals(roleName)) {
+                    foundedUsers.add(user); // Add the user to the foundedUsers list, not the users list
+                    break; // Exit the inner loop since the user is found
+                }
+            }
+        }
+        return foundedUsers;
+    }
     public void delete(User user) {
         repository.delete(converter.toEntity(user));
     }

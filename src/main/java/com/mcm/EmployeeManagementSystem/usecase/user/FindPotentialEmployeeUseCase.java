@@ -21,7 +21,7 @@ public class FindPotentialEmployeeUseCase {
     private final  GetAllEnabledUseCase getAllEnabledUseCase;
 
     public List<User> getAllPotentialWorkers() {
-        List<User> users = getAllEnabledUseCase.getAllEnabled();
+        List<User> users = userStore.getAllEnabled();
         List<User> filteredUsers = new ArrayList<>();
 
         for (User user : users) {

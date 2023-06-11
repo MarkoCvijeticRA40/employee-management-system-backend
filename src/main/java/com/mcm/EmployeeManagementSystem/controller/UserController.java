@@ -1,7 +1,6 @@
 package com.mcm.EmployeeManagementSystem.controller;
 
 import com.mcm.EmployeeManagementSystem.dto.Response;
-import com.mcm.EmployeeManagementSystem.model.Address;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
@@ -13,13 +12,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,14 +36,12 @@ public class UserController {
     private final CreateAdministratorProfileUseCase createAdministratorProfileUseCase;
     private final FindByRoleNameUseCase findByRoleNameUseCase;
     private final SearchUsersUseCase searchUsersUseCase;
-    private final FindByTitleUseCase findByTitleUseCase;
     private final GetAllEnabledUseCase getAllEnabledUseCase;
     private final FindPotentialEmployeeUseCase findPotentialEmployeeUseCase;
     private final FindUserUseCase findUserUseCase;
     private final EditEngineerUseCase editEngineerUseCase;
     private final DeleteEngineerUseCase deleteEngineerUseCase;
     private final EditProjectManagerUseCase editProjectManagerUseCase;
-
     private final PasswordEncoder passwordEncoder;
     private final FindUserByEmailUseCase findUserByEmailUseCase;
 
@@ -76,13 +71,8 @@ public class UserController {
     }
 
     @GetMapping("rolename")
-    public List<User> findByRoleName(@RequestParam String roleName) {
+    public Response findByRoleName(@RequestParam String roleName) {
         return findByRoleNameUseCase.findByRoleName(roleName);
-    }
-
-    @GetMapping("title")
-    public List<User> findByTitle(@RequestParam String title) {
-        return findByTitleUseCase.findByTitle(title);
     }
 
     @GetMapping("enabled")
@@ -90,7 +80,6 @@ public class UserController {
         return getAllEnabledUseCase.getAllEnabled();
     }
 
-    //Dobavljam samo potencijalne iznenjere i menadzere za neki projekat.Administratori i HR menadzeri ne rade direktno na projektu
     @GetMapping("potential/workers")
     public List<User> getAllPotentialWorkers() {
         return findPotentialEmployeeUseCase.getAllPotentialWorkers();
@@ -104,17 +93,15 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public User updateUser(@RequestBody User user) {
+    public Response updateAdministrator(@RequestBody User user) {
         return editAdministratorProfileUseCase.updateAdministrator(user);
     }
 
     @PostMapping("/register/administrator")
-    public User registerUser(@RequestBody User user) {
-        return createAdministratorProfileUseCase.register(user);
-    }
+    public Response registerUser(@RequestBody User user) { return createAdministratorProfileUseCase.register(user); }
 
     @GetMapping("/search/engineers/{email}/{name}/{surname}/{startDate}/{endDate}")
-    public List<User> searchEngineers(@PathVariable String email, @PathVariable String name, @PathVariable String surname, @PathVariable String startDate, @PathVariable String endDate
+    public Response searchEngineers(@PathVariable String email, @PathVariable String name, @PathVariable String surname, @PathVariable String startDate, @PathVariable String endDate
     ) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'X (zzzz)", Locale.ENGLISH);
         ZonedDateTime parsedStartDate = ZonedDateTime.parse(startDate, formatter);
