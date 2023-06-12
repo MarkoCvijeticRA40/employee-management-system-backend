@@ -39,8 +39,7 @@ public class AuthenticationController {
     private final RefreshTokenUseCase refreshTokenUseCase;
 
     @PostMapping("/login")
-    public AuthenticationResponse login(@RequestBody AuthenticationRequest request) {
-        return loginUseCase.authenticate(request);
+    public AuthenticationResponse login(@RequestBody AuthenticationRequest request) { return loginUseCase.authenticate(request);
     }
 
     @GetMapping("/generate-sttoken/{email}")

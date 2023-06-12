@@ -1,7 +1,9 @@
 package com.mcm.EmployeeManagementSystem.controller;
 
+import com.mcm.EmployeeManagementSystem.converter.UserConverter;
 import com.mcm.EmployeeManagementSystem.dto.Response;
 import com.mcm.EmployeeManagementSystem.model.User;
+import com.mcm.EmployeeManagementSystem.repository.UserRepository;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.IsActivationLinkUsedUseCase;
@@ -46,6 +48,9 @@ public class UserController {
     private final FindUserByEmailUseCase findUserByEmailUseCase;
     private final BlockUserUseCase blockUserUseCase;
     private final UnblockUserUseCase unblockUserUseCase;
+    private final UserRepository userRepository;
+    private  final UserConverter userConverter;
+    private final EditHrManagerUseCase editHrManagerUseCase;
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("user") String userId,
@@ -137,13 +142,18 @@ public class UserController {
     }
 
     @PutMapping("/block")
-    public Response blockUser(@RequestBody User user) {
+    public Response block(@RequestBody User user) {
         return blockUserUseCase.block(user);
     }
 
     @PutMapping("/unblock")
-    public Response unblockUser(@RequestBody User user) {
+    public Response unblock(@RequestBody User user) {
         return unblockUserUseCase.unblock(user);
+    }
+
+    @PutMapping("/{id}/hrmanager")
+    public Response updateHrManager(@PathVariable Long id, @RequestBody User user) {
+        return editHrManagerUseCase.update(id, user);
     }
 }
 
