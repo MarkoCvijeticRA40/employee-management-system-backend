@@ -18,6 +18,7 @@ import static org.apache.logging.log4j.util.Strings.isBlank;
 @Component
 @RequiredArgsConstructor
 public class EditUserValidator implements Validator<User> {
+    private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
     @Override
     public ValidationReport validate(User user) {
         ValidationReport report = new ValidationReport(true, new HashMap<>());
@@ -32,6 +33,11 @@ public class EditUserValidator implements Validator<User> {
             if (isBlank(user.getPassword())) {
                 report.setValid(false);
                 report.addMessage(UserConstant.PASSWORD, "password is blank");
+            } else {
+                if (!isValid(user.getPassword())) {
+                    report.setValid(false);
+                    report.addMessage(UserConstant.PASSWORD, "password format is not valid");
+                }
             }
             if (isBlank(user.getName())) {
                 report.setValid(false);
@@ -95,5 +101,9 @@ public class EditUserValidator implements Validator<User> {
             return true;
         }
         return false;
+    }
+
+    private boolean isValid(String password) {
+        return password.matches(PASSWORD_REGEX);
     }
 }
