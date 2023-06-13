@@ -1,7 +1,11 @@
 package com.mcm.EmployeeManagementSystem.controller;
 
+import com.mcm.EmployeeManagementSystem.converter.UserConverter;
 import com.mcm.EmployeeManagementSystem.dto.Response;
+import com.mcm.EmployeeManagementSystem.model.RegistrationRequest;
+import com.mcm.EmployeeManagementSystem.model.RegistrationRequestStatus;
 import com.mcm.EmployeeManagementSystem.model.User;
+import com.mcm.EmployeeManagementSystem.repository.UserRepository;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.IsActivationLinkUsedUseCase;
@@ -36,7 +40,7 @@ public class UserController {
     private final CreateAdministratorProfileUseCase createAdministratorProfileUseCase;
     private final FindByRoleNameUseCase findByRoleNameUseCase;
     private final SearchUsersUseCase searchUsersUseCase;
-    private final GetAllEnabledUseCase getAllEnabledUseCase;
+    private final FindUsersWithStartDateUseCase findUsersWithStartDateUseCase;
     private final FindPotentialEmployeeUseCase findPotentialEmployeeUseCase;
     private final FindUserUseCase findUserUseCase;
     private final EditEngineerUseCase editEngineerUseCase;
@@ -44,6 +48,11 @@ public class UserController {
     private final EditProjectManagerUseCase editProjectManagerUseCase;
     private final PasswordEncoder passwordEncoder;
     private final FindUserByEmailUseCase findUserByEmailUseCase;
+    private final BlockUserUseCase blockUserUseCase;
+    private final UnblockUserUseCase unblockUserUseCase;
+    private final UserRepository userRepository;
+    private  final UserConverter userConverter;
+    private final EditHrManagerUseCase editHrManagerUseCase;
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("user") String userId,
@@ -75,10 +84,8 @@ public class UserController {
         return findByRoleNameUseCase.findByRoleName(roleName);
     }
 
-    @GetMapping("enabled")
-    public List<User> getAllEnabled() {
-        return getAllEnabledUseCase.getAllEnabled();
-    }
+    @GetMapping("startdate")
+    public List<User> getAllWithStartDate() { return findUsersWithStartDateUseCase.findUsersWithStartDate(); }
 
     @GetMapping("potential/workers")
     public List<User> getAllPotentialWorkers() {
@@ -134,6 +141,21 @@ public class UserController {
     @PutMapping("/{id}/project-manager")
     public Response updateProjectManager(@PathVariable Long id, @RequestBody User user) {
         return editProjectManagerUseCase.update(id, user);
+    }
+
+    @PutMapping("/block")
+    public Response block(@RequestBody User user) {
+        return blockUserUseCase.block(user);
+    }
+
+    @PutMapping("/unblock")
+    public Response unblock(@RequestBody User user) {
+        return unblockUserUseCase.unblock(user);
+    }
+
+    @PutMapping("/{id}/hrmanager")
+    public Response updateHrManager(@PathVariable Long id, @RequestBody User user) {
+        return editHrManagerUseCase.update(id, user);
     }
 }
 

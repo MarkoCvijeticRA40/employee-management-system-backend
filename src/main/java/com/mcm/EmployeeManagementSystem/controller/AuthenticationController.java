@@ -37,6 +37,7 @@ public class AuthenticationController {
     private final JwtService jwtService;
     private final GenerateTokensUseCase generateTokensUseCase;
     private final RefreshTokenUseCase refreshTokenUseCase;
+    private final ForgotPasswordUseCase forgotPasswordUseCase;
 
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody AuthenticationRequest request) {
@@ -84,4 +85,8 @@ public class AuthenticationController {
         return refreshTokenUseCase.refresh(refreshToken);
     }
 
+    @PutMapping("/forgot-password/{email}")
+    public Response forgotPassword(@PathVariable String email) {
+        return forgotPasswordUseCase.generateAndSendPassword(email);
+    }
 }

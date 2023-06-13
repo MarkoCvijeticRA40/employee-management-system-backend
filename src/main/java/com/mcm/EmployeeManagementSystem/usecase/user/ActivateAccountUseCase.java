@@ -7,6 +7,8 @@ import com.mcm.EmployeeManagementSystem.validator.user.ReadUserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class ActivateAccountUseCase {
@@ -18,6 +20,8 @@ public class ActivateAccountUseCase {
         if (report.isValid()) {
             User user = store.find(userId);
             user.setAccountEnabled(true);
+            //Dodao zbog funkcionalnosti sa blokiranjem korisnika
+            user.setStartOfWork(LocalDateTime.now());
             store.save(user);
         }
     }

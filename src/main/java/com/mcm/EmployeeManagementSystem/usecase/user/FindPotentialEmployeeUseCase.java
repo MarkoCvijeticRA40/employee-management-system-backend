@@ -18,7 +18,6 @@ public class FindPotentialEmployeeUseCase {
     private final UserStore userStore;
     private final UserRepository userRepository;
     private final UserConverter converter;
-    private final  GetAllEnabledUseCase getAllEnabledUseCase;
 
     public List<User> getAllPotentialWorkers() {
         List<User> users = userStore.getAllEnabled();

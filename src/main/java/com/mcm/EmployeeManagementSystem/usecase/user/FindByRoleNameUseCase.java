@@ -2,6 +2,7 @@ package com.mcm.EmployeeManagementSystem.usecase.user;
 
 import com.mcm.EmployeeManagementSystem.dto.Response;
 import com.mcm.EmployeeManagementSystem.model.User;
+import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
 import com.mcm.EmployeeManagementSystem.validator.user.FindUsersByRoleValidator;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class FindByRoleNameUseCase {
 
-    private final GetAllEnabledUseCase getAllEnabledUseCase;
+    private final UserStore store;
     private final FindUsersByRoleValidator validator;
 
     public Response findByRoleName(String roleName) {
@@ -25,7 +26,7 @@ public class FindByRoleNameUseCase {
             return new Response(report, new ArrayList<>());
         }
 
-        List<User> users = getAllEnabledUseCase.getAllEnabled();
+        List<User> users = store.getAllEnabled();
 
         List<User> foundedUsers = users.stream()
                 .filter(user -> user.getRoleNames().contains(roleName))

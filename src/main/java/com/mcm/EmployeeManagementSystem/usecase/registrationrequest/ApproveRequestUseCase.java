@@ -64,7 +64,11 @@ public class ApproveRequestUseCase {
         List<String> roleNames = new ArrayList<>();
         roleNames.add(request.getRoleName());
         user.setRoleNames(roleNames);
-        user.setStartOfWork(LocalDateTime.now());
+        //user.setStartOfWork(LocalDateTime.now());
+        //Ovo sam dodao zbog moje funkcionalnosti za blokiranje korisnika,tek kada korisnik aktivira nalog stavicu da mu krece
+        //startOfWork,kako bih razlikovao korisnike koji su blokirani(accountEnabled = false startOfWork = neki datum
+        //i korisnike koji nisu potvrdili nalog(accountEnabled = false startOfWork = null nisu krenuli da rade
+        user.setStartOfWork(null);
         user.setAccountEnabled(false);
 
         return user;

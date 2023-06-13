@@ -2,6 +2,7 @@ package com.mcm.EmployeeManagementSystem.validator.authentication;
 
 import com.mcm.EmployeeManagementSystem.constant.AuthenticationConstant;
 import com.mcm.EmployeeManagementSystem.constant.EmailConstant;
+import com.mcm.EmployeeManagementSystem.constant.UserConstant;
 import com.mcm.EmployeeManagementSystem.converter.UserConverter;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.security.config.JwtService;
@@ -37,9 +38,17 @@ public class RefreshTokenValidator {
                     report.setValid(false);
                     report.addMessage(AuthenticationConstant.REFRESH_TOKEN, "refresh token is not valid");
                 }
+                //Dodato zbog funkcionalnosti za blokiranje korisnika
+                if(user.isAccountEnabled() == false){
+                    report.setValid(false);
+                    report.addMessage(UserConstant.IS_ACCOUNT_ENABLED,"user is not enabled");
+                }
+                if(user.getStartOfWork() == null) {
+                    report.setValid(false);
+                    report.addMessage(UserConstant.START_OF_WORK,"user do not start working");
+                }
             }
         }
-
         return report;
     }
 }
