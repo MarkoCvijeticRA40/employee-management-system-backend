@@ -6,6 +6,7 @@ import com.mcm.EmployeeManagementSystem.model.RegistrationRequest;
 import com.mcm.EmployeeManagementSystem.model.RegistrationRequestStatus;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.repository.UserRepository;
+import com.mcm.EmployeeManagementSystem.security.aes.AESKeyGenerator;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.IsActivationLinkUsedUseCase;
@@ -145,6 +146,8 @@ public class UserController {
 
     @PutMapping("/block")
     public Response block(@RequestBody User user) {
+        /*AESKeyGenerator keyGenerator = new AESKeyGenerator();
+        keyGenerator.generateAESKey();*/
         return blockUserUseCase.block(user);
     }
 
