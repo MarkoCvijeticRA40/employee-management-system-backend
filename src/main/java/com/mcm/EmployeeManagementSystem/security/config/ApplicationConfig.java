@@ -2,6 +2,7 @@ package com.mcm.EmployeeManagementSystem.security.config;
 
 import com.mcm.EmployeeManagementSystem.repository.UserRepository;
 import com.mcm.EmployeeManagementSystem.security.aes.AESKeyGenerator;
+import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,6 +53,11 @@ public class ApplicationConfig {
     @Bean
     public AESKeyGenerator aesKeyGenerator() {
         return new AESKeyGenerator();
+    }
+
+    @Bean
+    public Dotenv dotenv() {
+        return Dotenv.configure().load();
     }
 }
 
