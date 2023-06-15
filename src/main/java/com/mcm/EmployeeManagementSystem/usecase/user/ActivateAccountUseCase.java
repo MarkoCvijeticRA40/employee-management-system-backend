@@ -1,6 +1,7 @@
 package com.mcm.EmployeeManagementSystem.usecase.user;
 
 import com.mcm.EmployeeManagementSystem.model.User;
+import com.mcm.EmployeeManagementSystem.security.crypto.UserEncryptor;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
 import com.mcm.EmployeeManagementSystem.validator.user.ReadUserValidator;
@@ -14,11 +15,13 @@ import java.time.LocalDateTime;
 public class ActivateAccountUseCase {
     private final UserStore store;
     private final ReadUserValidator readUserValidator;
+    private final UserEncryptor userEncryptor;
 
     public void activate(Long userId) {
         ValidationReport report = readUserValidator.validate(userId);
         if (report.isValid()) {
             User user = store.find(userId);
+            user = userEncryptor.encryptUser(user);
             user.setAccountEnabled(true);
             //Dodao zbog funkcionalnosti sa blokiranjem korisnika
             user.setStartOfWork(LocalDateTime.now());

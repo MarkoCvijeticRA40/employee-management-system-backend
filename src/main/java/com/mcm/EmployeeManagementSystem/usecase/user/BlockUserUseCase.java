@@ -21,6 +21,7 @@ public class BlockUserUseCase {
 
     public Response block(User user) {
         user = userEncryptor.encryptUser(user);
+        user.setAccountEnabled(false);
         ValidationReport report = validator.validate(user);
         if (report.isValid()) {
             user = userStore.save(user);

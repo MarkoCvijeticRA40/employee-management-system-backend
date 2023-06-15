@@ -18,6 +18,7 @@ public class UnblockUserUseCase {
     private final UserEncryptor userEncryptor;
 
     public Response unblock(User user) {
+        user.setAccountEnabled(true);
         user = userEncryptor.encryptUser(user);
         ValidationReport report = validator.validate(user);
         if (report.isValid()) {
