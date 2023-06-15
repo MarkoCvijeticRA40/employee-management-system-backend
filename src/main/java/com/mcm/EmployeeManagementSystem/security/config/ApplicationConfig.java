@@ -2,6 +2,8 @@ package com.mcm.EmployeeManagementSystem.security.config;
 
 import com.mcm.EmployeeManagementSystem.repository.UserRepository;
 import com.mcm.EmployeeManagementSystem.security.aes.AESKeyGenerator;
+import com.mcm.EmployeeManagementSystem.security.aes.DataDecryption;
+import com.mcm.EmployeeManagementSystem.security.aes.DataEncryption;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -59,5 +61,11 @@ public class ApplicationConfig {
     public Dotenv dotenv() {
         return Dotenv.configure().load();
     }
+
+    @Bean
+    public DataDecryption dataDecryption() { return new DataDecryption(); }
+
+    @Bean
+    public DataEncryption dataEncryption() { return new DataEncryption(); }
 }
 
