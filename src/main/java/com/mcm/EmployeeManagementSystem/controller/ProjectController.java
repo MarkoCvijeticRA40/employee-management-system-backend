@@ -8,6 +8,7 @@ import com.mcm.EmployeeManagementSystem.store.ProjectStore;
 import com.mcm.EmployeeManagementSystem.store.ProjectUserAssignmentStore;
 import com.mcm.EmployeeManagementSystem.usecase.project.AddEmployeeToProjectUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.project.CreateProjectUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.project.FindAllUseCase;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,13 +28,14 @@ public class ProjectController {
     private final ProjectUserAssignmentStore projectUserAssignmentStore;
     private final CreateProjectUseCase createProjectUseCase;
     private final AddEmployeeToProjectUseCase addEmployeeToProjectUseCase;
+    private final FindAllUseCase findAllUseCase;
 
     @PostMapping("/create")
     public Response create(@RequestBody Project project) { return createProjectUseCase.create(project); }
 
     @GetMapping("")
     public List<Project> findAll() {
-        return store.findAll();
+        return findAllUseCase.findAll();
     }
 
     @PutMapping("/update")
