@@ -1,9 +1,14 @@
 package com.mcm.EmployeeManagementSystem.security.config;
 
 import com.mcm.EmployeeManagementSystem.repository.UserRepository;
+import com.mcm.EmployeeManagementSystem.security.aes.AESKeyGenerator;
+import com.mcm.EmployeeManagementSystem.security.aes.DataDecryption;
+import com.mcm.EmployeeManagementSystem.security.aes.DataEncryption;
+import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -41,5 +46,26 @@ public class ApplicationConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
+    @Bean
+    public AESKeyGenerator aesKeyGenerator() {
+        return new AESKeyGenerator();
+    }
+
+    @Bean
+    public Dotenv dotenv() {
+        return Dotenv.configure().load();
+    }
+
+    @Bean
+    public DataDecryption dataDecryption() { return new DataDecryption(); }
+
+    @Bean
+    public DataEncryption dataEncryption() { return new DataEncryption(); }
 }
 

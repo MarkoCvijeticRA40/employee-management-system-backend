@@ -2,6 +2,7 @@ package com.mcm.EmployeeManagementSystem.usecase.user;
 
 import com.mcm.EmployeeManagementSystem.dto.Response;
 import com.mcm.EmployeeManagementSystem.model.User;
+import com.mcm.EmployeeManagementSystem.security.crypto.UserEncryptor;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
 import com.mcm.EmployeeManagementSystem.validator.user.CreateAdministratorValidator;
@@ -16,11 +17,11 @@ public class CreateAdministratorProfileUseCase {
     private final PasswordEncoder passwordEncoder;
     private final UserStore userStore;
     private final CreateAdministratorValidator validator;
+    private final UserEncryptor userEncryptor;
 
     public Response register(User administrator) {
-
+        administrator = userEncryptor.encryptUser(administrator);
         ValidationReport report = validator.validate(administrator);
-
         if (report.isValid()) {
             if (userStore.exists(administrator.getEmail()) == false) {
                 administrator.setStartOfWork(null);

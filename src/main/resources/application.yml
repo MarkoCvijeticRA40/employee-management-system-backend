@@ -39,3 +39,5 @@ security:
       expiration: 7200000
     short-term-token:
       expiration: 600000
+  encryption:
+    key: 8f63bef12598c73517980a117a77b3f4194219520ae9147f720025824ebdc620
