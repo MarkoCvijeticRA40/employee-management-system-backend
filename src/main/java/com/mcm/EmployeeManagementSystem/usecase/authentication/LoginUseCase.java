@@ -19,6 +19,7 @@ public class LoginUseCase {
     private final RevokeAllUserTokensUseCase revokeAllUserTokensUseCase;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
