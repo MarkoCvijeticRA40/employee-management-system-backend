@@ -28,6 +28,7 @@ public class UserConverter implements GenericConverter<User, UserEntity> {
             user.setAddress(addressConverter.toModel(userEntity.getAddress()));
             user.setPhoneNum(userEntity.getPhoneNum());
             user.setTitle(userEntity.getTitle());
+            user.setSecretKey(userEntity.getSecretKey());
             List<String> roleNames = new ArrayList<>();
             for (RoleEntity roleEntity : userEntity.getRoles()) {
                 roleNames.add(roleEntity.getName());
@@ -63,6 +64,7 @@ public class UserConverter implements GenericConverter<User, UserEntity> {
         userEntity.setAddress(addressConverter.toEntity(user.getAddress()));
         userEntity.setPhoneNum(user.getPhoneNum());
         userEntity.setTitle(user.getTitle());
+        userEntity.setSecretKey(user.getSecretKey());
         List<RoleEntity> roleEntities = new ArrayList<>();
         for (String roleName : user.getRoleNames()) {
             roleEntities.add(roleRepository.findByName(roleName));

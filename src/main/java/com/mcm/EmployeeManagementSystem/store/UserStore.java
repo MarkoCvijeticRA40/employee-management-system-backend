@@ -3,7 +3,6 @@ package com.mcm.EmployeeManagementSystem.store;
 import com.mcm.EmployeeManagementSystem.converter.UserConverter;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.repository.UserRepository;
-import com.mcm.EmployeeManagementSystem.security.crypto.DataEncryptor;
 import com.mcm.EmployeeManagementSystem.security.crypto.UserDecryptor;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,7 @@ public class UserStore {
     private final UserConverter converter;
     private final UserRepository userRepository;
     private final UserDecryptor userDecryptor;
-    private final DataEncryptor dataEncryptor;
+    //private final DataEncryptor dataEncryptor;
 
     public User save(User user) {
         return converter.toModel(repository.save(converter.toEntity(user)));

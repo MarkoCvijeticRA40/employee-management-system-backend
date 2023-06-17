@@ -2,7 +2,6 @@ package com.mcm.EmployeeManagementSystem.security.crypto;
 
 import com.mcm.EmployeeManagementSystem.model.Address;
 import com.mcm.EmployeeManagementSystem.security.aes.AESKeyGenerator;
-import com.mcm.EmployeeManagementSystem.security.aes.DataDecryption;
 import com.mcm.EmployeeManagementSystem.security.aes.DataEncryption;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
