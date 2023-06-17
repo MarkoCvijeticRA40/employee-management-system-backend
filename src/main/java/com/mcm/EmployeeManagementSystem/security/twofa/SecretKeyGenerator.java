@@ -1,7 +1,6 @@
 package com.mcm.EmployeeManagementSystem.security.twofa;
 
 import org.apache.commons.codec.binary.Base32;
-import org.apache.commons.codec.binary.Hex;
 
 import java.security.SecureRandom;
 
