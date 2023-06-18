@@ -14,6 +14,7 @@ public class DataEncryptor {
     private final Dotenv dotenv;
     private final DataEncryption dataEncryption;
     private final AESKeyGenerator aesKeyGenerator;
+    private final AddressDecryptor addressDecryptor;
 
     public String encryptData(Object data) {
         String encryptionKey = dotenv.get("ENCRYPTION_KEY");

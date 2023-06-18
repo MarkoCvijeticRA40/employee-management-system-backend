@@ -38,9 +38,19 @@ public class AuthenticationController {
     private final GenerateTokensUseCase generateTokensUseCase;
     private final RefreshTokenUseCase refreshTokenUseCase;
     private final ForgotPasswordUseCase forgotPasswordUseCase;
+    private final TwoFactorLoginUseCase twoFactorLoginUseCase;
 
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody AuthenticationRequest request) {
+        return loginUseCase.authenticate(request);
+    }
+
+    @PostMapping("/two-factor/login")
+    public AuthenticationResponse twoFactorLogin(@RequestBody AuthenticationRequest request, @RequestParam Integer oneTimeCode) {
+        if(twoFactorLoginUseCase.isUserCodeValid(request,oneTimeCode) == true){
+            return loginUseCase.authenticate(request);
+        }
+        request.setEmail("Wrong code");
         return loginUseCase.authenticate(request);
     }
 

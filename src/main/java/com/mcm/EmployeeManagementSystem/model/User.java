@@ -24,4 +24,5 @@ public class User {
     private List<String> roleNames;
     private LocalDateTime startOfWork;
     private boolean isAccountEnabled;
+    private String secretKey;
 }

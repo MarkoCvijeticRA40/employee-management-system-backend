@@ -2,11 +2,9 @@ package com.mcm.EmployeeManagementSystem.controller;
 
 import com.mcm.EmployeeManagementSystem.converter.UserConverter;
 import com.mcm.EmployeeManagementSystem.dto.Response;
-import com.mcm.EmployeeManagementSystem.model.RegistrationRequest;
-import com.mcm.EmployeeManagementSystem.model.RegistrationRequestStatus;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.repository.UserRepository;
-import com.mcm.EmployeeManagementSystem.security.aes.AESKeyGenerator;
+import com.mcm.EmployeeManagementSystem.security.crypto.DataEncryptor;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.IsActivationLinkUsedUseCase;
@@ -54,6 +52,8 @@ public class UserController {
     private final UserRepository userRepository;
     private  final UserConverter userConverter;
     private final EditHrManagerUseCase editHrManagerUseCase;
+    private UpdateUserCodesUseCase updateUserCodesUseCase;
+    private final DataEncryptor dataEncryptor;
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("user") String userId,
