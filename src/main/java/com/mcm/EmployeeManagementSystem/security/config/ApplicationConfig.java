@@ -4,6 +4,7 @@ import com.mcm.EmployeeManagementSystem.repository.UserRepository;
 import com.mcm.EmployeeManagementSystem.security.aes.AESKeyGenerator;
 import com.mcm.EmployeeManagementSystem.security.aes.DataDecryption;
 import com.mcm.EmployeeManagementSystem.security.aes.DataEncryption;
+import com.warrenstrange.googleauth.GoogleAuthenticator;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -71,5 +72,8 @@ public class ApplicationConfig {
     public DataEncryption dataEncryption() {
         return new DataEncryption();
     }
+
+    @Bean
+    public GoogleAuthenticator googleAuthenticator() { return new GoogleAuthenticator(); }
 }
 

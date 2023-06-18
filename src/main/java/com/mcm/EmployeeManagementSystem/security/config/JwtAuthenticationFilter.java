@@ -1,5 +1,6 @@
 package com.mcm.EmployeeManagementSystem.security.config;
 
+import com.mcm.EmployeeManagementSystem.security.crypto.DataEncryptor;
 import com.mcm.EmployeeManagementSystem.security.token.TokenRepository;
 import com.mcm.EmployeeManagementSystem.usecase.log.ShouldWarnAdminUseCase;
 import jakarta.servlet.FilterChain;
@@ -27,6 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private final TokenRepository tokenRepository;
     private final ShouldWarnAdminUseCase shouldWarnAdminUseCase;
+    private final DataEncryptor dataEncryptor;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {

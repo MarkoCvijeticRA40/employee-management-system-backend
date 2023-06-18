@@ -27,6 +27,8 @@ public class UserEntity implements UserDetails {
     private Long id;
     private String email;
     private String password;
+    @Column(name = "secret_key",nullable = true)
+    private String secretKey;
     private String name;
     private String surname;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)

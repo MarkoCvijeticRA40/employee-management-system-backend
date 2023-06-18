@@ -21,7 +21,7 @@ public class UserDecryptor {
         String encryptionKey = dotenv.get("ENCRYPTION_KEY");
         encryptionKeyBytes = aesKeyGenerator.decodeAESKey(encryptionKey);
         try {
-            //user.setEmail(dataDecryption.decryptData(user.getEmail(), encryptionKeyBytes));
+            user.setEmail(dataDecryption.decryptData(user.getEmail(), encryptionKeyBytes));
             user.setName(dataDecryption.decryptData(user.getName(), encryptionKeyBytes));
             user.setSurname(dataDecryption.decryptData(user.getSurname(), encryptionKeyBytes));
             user.setAddress(addressDecryptor.decryptAddress(user.getAddress()));

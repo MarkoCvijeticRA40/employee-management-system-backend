@@ -8,6 +8,7 @@ import com.mcm.EmployeeManagementSystem.handler.exceptions.InvalidLinkException;
 import com.mcm.EmployeeManagementSystem.handler.exceptions.InvalidTokenException;
 import com.mcm.EmployeeManagementSystem.handler.exceptions.TokenLinkIsAlreadyUsedException;
 import com.mcm.EmployeeManagementSystem.security.config.JwtService;
+import com.mcm.EmployeeManagementSystem.security.crypto.DataEncryptor;
 import com.mcm.EmployeeManagementSystem.usecase.authentication.*;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.IsTokenLinkUsedUseCase;
@@ -41,9 +42,22 @@ public class AuthenticationController {
     private final GenerateTokensUseCase generateTokensUseCase;
     private final RefreshTokenUseCase refreshTokenUseCase;
     private final ForgotPasswordUseCase forgotPasswordUseCase;
+    private final TwoFactorLoginUseCase twoFactorLoginUseCase;
+    private final DataEncryptor dataEncryptor;
 
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody AuthenticationRequest request) {
+        request.setEmail(dataEncryptor.encryptData(request.getEmail()));
+        return loginUseCase.authenticate(request);
+    }
+
+    @PostMapping("/two-factor/login")
+    public AuthenticationResponse twoFactorLogin(@RequestBody AuthenticationRequest request, @RequestParam Integer oneTimeCode) {
+        if(twoFactorLoginUseCase.isUserCodeValid(request,oneTimeCode) == true){
+            request.setEmail(dataEncryptor.encryptData(request.getEmail()));
+            return loginUseCase.authenticate(request);
+        }
+        request.setEmail("Wrong code");
         return loginUseCase.authenticate(request);
     }
 

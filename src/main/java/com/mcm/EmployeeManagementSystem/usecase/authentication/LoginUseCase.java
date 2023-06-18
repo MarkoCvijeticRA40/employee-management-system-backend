@@ -41,6 +41,7 @@ public class LoginUseCase {
                 shouldWarnAdminUseCase.check("INFO", "LoginUseCase", "User's with email: " + request.getEmail() + " password is not correct");
             }
         }
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),

@@ -34,10 +34,11 @@ public class UserStore {
     }
 
     public User find(String email) {
+        email = dataEncryptor.encryptData(email);
         return converter.toModel(repository.findUserByEmail(email));
     }
-
     public boolean exists(String email) {
+        email = dataEncryptor.encryptData(email);
         return repository.existsByEmail(email);
     }
 

@@ -1,27 +1,28 @@
 package com.mcm.EmployeeManagementSystem.security.crypto;
 
 import com.mcm.EmployeeManagementSystem.security.aes.AESKeyGenerator;
-import com.mcm.EmployeeManagementSystem.security.aes.DataEncryption;
+import com.mcm.EmployeeManagementSystem.security.aes.DataDecryption;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class DataEncryptor {
+public class DataDecryptor {
 
     private byte[] encryptionKeyBytes;
     private final Dotenv dotenv;
-    private final DataEncryption dataEncryption;
+    private final DataDecryption dataDecryption;
     private final AESKeyGenerator aesKeyGenerator;
-    private final AddressDecryptor addressDecryptor;
+    private final AddressEncryptor addressEncryptor;
 
-    public String encryptData(Object data) {
+    public String decryptData(String encryptedData) {
         String encryptionKey = dotenv.get("ENCRYPTION_KEY");
         encryptionKeyBytes = aesKeyGenerator.decodeAESKey(encryptionKey);
         try {
-            String stringData = String.valueOf(data);
-            return dataEncryption.encryptData(stringData, encryptionKeyBytes);
+            String decryptedData = dataDecryption.decryptData(encryptedData, encryptionKeyBytes);
+            // Ovde možete implementirati odgovarajuću logiku za obradu dekriptovanih podataka i konverziju u odgovarajući tip.
+            return decryptedData;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

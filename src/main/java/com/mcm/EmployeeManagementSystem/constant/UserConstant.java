@@ -13,4 +13,5 @@ public class UserConstant {
     public static final String ROLE_NAMES = "role names";
     public static final String START_OF_WORK = "start of work";
     public static final String IS_ACCOUNT_ENABLED = "account enabled";
+    public static final String SECRET_KEY = "secret key";
 }
