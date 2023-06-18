@@ -47,7 +47,10 @@ public class AuthenticationController {
 
     @PostMapping("/two-factor/login")
     public AuthenticationResponse twoFactorLogin(@RequestBody AuthenticationRequest request, @RequestParam Integer oneTimeCode) {
-        twoFactorLoginUseCase.isUserCodeValid(request,oneTimeCode);
+        if(twoFactorLoginUseCase.isUserCodeValid(request,oneTimeCode) == true){
+            return loginUseCase.authenticate(request);
+        }
+        request.setEmail("Wrong code");
         return loginUseCase.authenticate(request);
     }
 
