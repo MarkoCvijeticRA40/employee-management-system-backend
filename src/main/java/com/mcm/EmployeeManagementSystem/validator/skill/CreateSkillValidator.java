@@ -1,7 +1,6 @@
 package com.mcm.EmployeeManagementSystem.validator.skill;
 
 import com.mcm.EmployeeManagementSystem.constant.SkillConstant;
-import com.mcm.EmployeeManagementSystem.constant.UserConstant;
 import com.mcm.EmployeeManagementSystem.model.Skill;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
 import com.mcm.EmployeeManagementSystem.validator.Validator;

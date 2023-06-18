@@ -1,6 +1,5 @@
 package com.mcm.EmployeeManagementSystem.validator.user;
 
-import com.mcm.EmployeeManagementSystem.constant.RegistrationRequestConstant;
 import com.mcm.EmployeeManagementSystem.constant.UserConstant;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;

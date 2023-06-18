@@ -1,14 +1,13 @@
 package com.mcm.EmployeeManagementSystem.validator.user;
 
 import com.mcm.EmployeeManagementSystem.constant.AddressConstant;
-import com.mcm.EmployeeManagementSystem.constant.RegistrationRequestConstant;
-import com.mcm.EmployeeManagementSystem.constant.RoleConstant;
 import com.mcm.EmployeeManagementSystem.constant.UserConstant;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
 import com.mcm.EmployeeManagementSystem.validator.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 
 import static org.apache.logging.log4j.util.Strings.isBlank;
@@ -68,7 +67,7 @@ public class BlockUserValidator implements Validator<User> {
                 report.setValid(false);
                 report.addMessage(UserConstant.ROLE_NAMES, "role name is blank");
             }
-            if(user.getRoleNames().contains("Administrator")){
+            if (user.getRoleNames().contains("Administrator")) {
                 report.setValid(false);
                 report.addMessage(UserConstant.ROLE_NAMES, "can not ban administrator");
             }

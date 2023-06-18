@@ -2,7 +2,6 @@ package com.mcm.EmployeeManagementSystem.usecase.skill;
 
 import com.mcm.EmployeeManagementSystem.dto.Response;
 import com.mcm.EmployeeManagementSystem.model.Skill;
-import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.store.SkillStore;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
 import com.mcm.EmployeeManagementSystem.validator.skill.DeleteSkillValidator;

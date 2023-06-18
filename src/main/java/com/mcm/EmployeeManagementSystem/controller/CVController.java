@@ -7,13 +7,14 @@ import com.mcm.EmployeeManagementSystem.store.UserStore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.*;
-
-import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -60,7 +61,7 @@ public class CVController {
         XWPFRun skillsRun = skillsParagraph.createRun();
         skillsRun.setText("Skills:");
 
-        for (Skill skill: skills) {
+        for (Skill skill : skills) {
             XWPFParagraph skillParagraph = document.createParagraph();
             XWPFRun skillRun = skillParagraph.createRun();
             skillRun.setText(skill.getName() + ": " + skill.getLevel());

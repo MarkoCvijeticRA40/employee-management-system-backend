@@ -10,6 +10,7 @@ import com.mcm.EmployeeManagementSystem.validator.user.EditUserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.security.SecureRandom;
 
 @Service
@@ -36,7 +37,7 @@ public class ForgotPasswordUseCase {
 
     public String generatePassword() {
         String password = generateRandomPassword();
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             password = generateRandomPassword();
         }
         return password;

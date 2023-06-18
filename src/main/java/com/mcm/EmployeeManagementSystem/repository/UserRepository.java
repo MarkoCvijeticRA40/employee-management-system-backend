@@ -13,4 +13,6 @@ public interface UserRepository extends EntityRepository<UserEntity> {
     Optional<UserEntity> findByEmail(String email);
 
     boolean existsByEmail(String email);
+
+    List<UserEntity> findByRoles_Name(String roleName);
 }

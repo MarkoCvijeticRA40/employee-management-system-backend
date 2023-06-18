@@ -3,7 +3,6 @@ package com.mcm.EmployeeManagementSystem.usecase.projectuserassignment;
 import com.mcm.EmployeeManagementSystem.dto.Response;
 import com.mcm.EmployeeManagementSystem.model.Project;
 import com.mcm.EmployeeManagementSystem.model.ProjectUserAssignment;
-import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.store.ProjectStore;
 import com.mcm.EmployeeManagementSystem.store.ProjectUserAssignmentStore;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;

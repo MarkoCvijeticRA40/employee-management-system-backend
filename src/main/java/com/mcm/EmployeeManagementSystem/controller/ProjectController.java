@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -31,7 +32,9 @@ public class ProjectController {
     private final FindAllProjectsUseCase findAllProjectsUseCase;
 
     @PostMapping("/create")
-    public Response create(@RequestBody Project project) { return createProjectUseCase.create(project); }
+    public Response create(@RequestBody Project project) {
+        return createProjectUseCase.create(project);
+    }
 
     @GetMapping("")
     public List<Project> findAll() {
@@ -46,7 +49,7 @@ public class ProjectController {
 
     private Project getNewProject(Project project) {
         Project newProject = store.save(project);
-        for (User user: project.getUsers()) {
+        for (User user : project.getUsers()) {
             ProjectUserAssignment projectUserAssignment = new ProjectUserAssignment();
             projectUserAssignment.setProject(newProject);
             projectUserAssignment.setUser(user);
@@ -58,9 +61,9 @@ public class ProjectController {
 
     private void createProjectUserAssignment(Project project) {
         List<ProjectUserAssignment> projectUserAssignments = projectUserAssignmentStore.findByProject(project);
-        for (User user: project.getUsers()) {
+        for (User user : project.getUsers()) {
             boolean flag = true;
-            for (ProjectUserAssignment projectUserAssignment: projectUserAssignments) {
+            for (ProjectUserAssignment projectUserAssignment : projectUserAssignments) {
                 System.out.println(projectUserAssignment.getProject().getName());
                 if (user.getId() == projectUserAssignment.getUser().getId()) {
                     flag = false;

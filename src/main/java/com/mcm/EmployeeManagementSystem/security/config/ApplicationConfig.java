@@ -63,9 +63,13 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public DataDecryption dataDecryption() { return new DataDecryption(); }
+    public DataDecryption dataDecryption() {
+        return new DataDecryption();
+    }
 
     @Bean
-    public DataEncryption dataEncryption() { return new DataEncryption(); }
+    public DataEncryption dataEncryption() {
+        return new DataEncryption();
+    }
 }
 

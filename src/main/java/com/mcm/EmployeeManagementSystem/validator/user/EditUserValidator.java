@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.stream.Stream;
 
 import static org.apache.logging.log4j.util.Strings.isBlank;
 
@@ -19,6 +18,7 @@ import static org.apache.logging.log4j.util.Strings.isBlank;
 @RequiredArgsConstructor
 public class EditUserValidator implements Validator<User> {
     private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+
     @Override
     public ValidationReport validate(User user) {
         ValidationReport report = new ValidationReport(true, new HashMap<>());
@@ -94,7 +94,7 @@ public class EditUserValidator implements Validator<User> {
     }
 
     private static boolean isRoleNameValid(User user) {
-        for (String role: user.getRoleNames()) {
+        for (String role : user.getRoleNames()) {
             if (role == RoleConstant.SOFTWARE_ENGINEER || role == RoleConstant.HR_MANAGER || role == RoleConstant.PROJECT_MANAGER) {
                 continue;
             }
