@@ -1,5 +1,7 @@
 package com.mcm.EmployeeManagementSystem.usecase.email;
 
+import com.google.zxing.WriterException;
+import com.mcm.EmployeeManagementSystem.model.User;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -11,6 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import java.io.File;
+import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +34,7 @@ public class SendEmailUseCase {
     }
 
     public void sendQRCode(String toAddress, String subject, String message, String filePath) throws MessagingException {
+        filePath = filePath.replace("\\", "\\\\");
         MimeMessageHelper helper = new MimeMessageHelper(javaMailSender.createMimeMessage(), true);
         helper.setTo(toAddress);
         helper.setFrom(env.getProperty("spring.mail.username"));

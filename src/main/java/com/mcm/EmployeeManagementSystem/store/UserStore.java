@@ -3,6 +3,7 @@ package com.mcm.EmployeeManagementSystem.store;
 import com.mcm.EmployeeManagementSystem.converter.UserConverter;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.repository.UserRepository;
+import com.mcm.EmployeeManagementSystem.security.crypto.DataEncryptor;
 import com.mcm.EmployeeManagementSystem.security.crypto.UserDecryptor;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class UserStore {
     private final UserConverter converter;
     private final UserRepository userRepository;
     private final UserDecryptor userDecryptor;
-    //private final DataEncryptor dataEncryptor;
+    private final DataEncryptor dataEncryptor;
 
     public User save(User user) {
         return converter.toModel(repository.save(converter.toEntity(user)));
@@ -28,8 +29,14 @@ public class UserStore {
     public User find(Long id) {
         return converter.toModel(repository.findOne(id));
     }
-    public User find(String email) { return converter.toModel(repository.findUserByEmail(email)); }
-    public boolean exists(String email) { return repository.existsByEmail(email); }
+    public User find(String email) {
+        email = dataEncryptor.encryptData(email);
+        return converter.toModel(repository.findUserByEmail(email));
+    }
+    public boolean exists(String email) {
+        email = dataEncryptor.encryptData(email);
+        return repository.existsByEmail(email);
+    }
 
     public User getById(Long id) {
         List<User> users = converter.toModel(repository.findAll());

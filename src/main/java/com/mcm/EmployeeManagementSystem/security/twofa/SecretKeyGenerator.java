@@ -1,9 +1,11 @@
 package com.mcm.EmployeeManagementSystem.security.twofa;
 
 import org.apache.commons.codec.binary.Base32;
+import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
 
+@Component
 public class SecretKeyGenerator {
 
     public static String generateSecretKey() {
