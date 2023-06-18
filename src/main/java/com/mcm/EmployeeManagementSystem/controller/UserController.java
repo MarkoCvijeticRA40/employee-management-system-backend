@@ -1,20 +1,27 @@
 package com.mcm.EmployeeManagementSystem.controller;
 
+import com.google.zxing.WriterException;
 import com.mcm.EmployeeManagementSystem.converter.UserConverter;
 import com.mcm.EmployeeManagementSystem.dto.Response;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.repository.UserRepository;
+import com.mcm.EmployeeManagementSystem.security.crypto.DataDecryptor;
 import com.mcm.EmployeeManagementSystem.security.crypto.DataEncryptor;
 import com.mcm.EmployeeManagementSystem.store.UserStore;
+import com.mcm.EmployeeManagementSystem.usecase.email.SendEmailUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.hmac.hmacutil.VerifyHmacUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.IsActivationLinkUsedUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.link.SetLinkToUsedUseCase;
+import com.mcm.EmployeeManagementSystem.usecase.qrcode.GenerateQrCodeUseCase;
 import com.mcm.EmployeeManagementSystem.usecase.user.*;
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
@@ -54,6 +61,9 @@ public class UserController {
     private final EditHrManagerUseCase editHrManagerUseCase;
     private UpdateUserCodesUseCase updateUserCodesUseCase;
     private final DataEncryptor dataEncryptor;
+    private final GenerateQrCodeUseCase generateQrCodeUseCase;
+    private final SendEmailUseCase sendEmailUseCase;
+    private final DataDecryptor dataDecryptor;
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("user") String userId,

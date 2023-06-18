@@ -15,7 +15,7 @@ public class GenerateQrCodeUseCase {
         String sanitizedEmail = email.replaceAll("[^a-zA-Z0-9]", "_");
         String fileName = sanitizedEmail + ".png";
         String filePath = "C:" + File.separator + "Users" + File.separator + "marko" + File.separator + "Desktop" + File.separator + "employee-management-system-backend" + File.separator + "qrCodes" + File.separator + fileName;
-        new GoogleAuthenticatorBarCodeGenerator().createQRCode(barcode, filePath, 100, 100);
+        new GoogleAuthenticatorBarCodeGenerator().createQRCode(barcode, filePath, 400, 400);
         return filePath;
     }
 
