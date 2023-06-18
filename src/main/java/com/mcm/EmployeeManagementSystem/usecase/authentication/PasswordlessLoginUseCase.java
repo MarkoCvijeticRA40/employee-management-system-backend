@@ -2,7 +2,6 @@ package com.mcm.EmployeeManagementSystem.usecase.authentication;
 
 import com.mcm.EmployeeManagementSystem.constant.EmailConstant;
 import com.mcm.EmployeeManagementSystem.converter.UserConverter;
-import com.mcm.EmployeeManagementSystem.dto.PasswordlessAuthenticationRequest;
 import com.mcm.EmployeeManagementSystem.dto.Response;
 import com.mcm.EmployeeManagementSystem.model.TokenLink;
 import com.mcm.EmployeeManagementSystem.model.User;

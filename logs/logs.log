@@ -1,0 +1,37 @@
+18.06.2023. 17:16:58|INFO |LoginUseCase        |User with email: bdfb does not exist
+18.06.2023. 17:17:10|WARN |SecurityConfig      |Unauthorized access attempt on api: /auth/login for user: null
+18.06.2023. 17:17:49|INFO |LoginUseCase        |User with email: bdfb does not exist
+18.06.2023. 17:18:46|WARN |SecurityConfig      |Unauthorized access attempt on api: /auth/login for user: null
+18.06.2023. 17:18:58|INFO |LoginUseCase        |User with email: bdfb does not exist
+18.06.2023. 17:24:02|WARN |SecurityConfig      |Unauthorized access attempt on api: /auth/login for user: null
+18.06.2023. 17:24:55|INFO |LoginUseCase        |User with email: bdfb does not exist
+18.06.2023. 17:26:33|WARN |SecurityConfig      |Unauthorized access attempt on api: /auth/login for user: null
+18.06.2023. 17:26:43|INFO |LoginUseCase        |User with email: bdfb does not exist
+18.06.2023. 17:26:43|WARN |SecurityConfig      |Unauthorized access attempt on api: /auth/login for user: null
+18.06.2023. 17:26:50|INFO |LoginUseCase        |User with email: bdfb does not exist
+18.06.2023. 17:26:50|WARN |SecurityConfig      |Unauthorized access attempt on api: /auth/login for user: null
+18.06.2023. 17:27:00|INFO |LoginUseCase        |User with email: bdfb does not exist
+18.06.2023. 17:27:08|WARN |SecurityConfig      |Unauthorized access attempt on api: /auth/login for user: null
+18.06.2023. 17:27:18|INFO |LoginUseCase        |User with email: bdfb does not exist
+18.06.2023. 17:27:36|WARN |SecurityConfig      |Unauthorized access attempt on api: /auth/login for user: null
+18.06.2023. 17:41:34|INFO |LoginUseCase        |User with email: markocvijetic@gmail.com does not exist
+18.06.2023. 17:41:35|WARN |SecurityConfig      |Unauthorized access attempt on api: /auth/login for user: null
+18.06.2023. 17:41:52|INFO |LoginUseCase        |User with email: markocvijetic@gmail.com does not exist
+18.06.2023. 17:41:53|WARN |SecurityConfig      |Unauthorized access attempt on api: /auth/login for user: null
+18.06.2023. 17:42:35|INFO |LoginUseCase        |User with email: markocvijeticbezbednost@gmail.com log in successfully
+18.06.2023. 17:42:36|WARN |SecurityConfig      |Unauthenticated access attempt on api: /users/find/markocvijeticbezbednost@gmail.com
+18.06.2023. 17:42:40|WARN |SecurityConfig      |Unauthenticated access attempt on api: /users/email/43
+18.06.2023. 18:52:56|INFO |LoginUseCase        |User with email: markocvijeticbezbednost@gmail.com log in successfully
+18.06.2023. 18:52:56|WARN |SecurityConfig      |Unauthenticated access attempt on api: /users/find/markocvijeticbezbednost@gmail.com
+18.06.2023. 18:53:02|WARN |SecurityConfig      |Unauthenticated access attempt on api: /users/email/43
+18.06.2023. 18:54:42|INFO |LoginUseCase        |User with email: markocvijeticbezbednost@gmail.com log in successfully
+18.06.2023. 18:54:45|WARN |SecurityConfig      |Unauthenticated access attempt on api: /logNotification/all
+18.06.2023. 18:54:51|WARN |SecurityConfig      |Unauthenticated access attempt on api: /requests/pending
+18.06.2023. 18:56:43|WARN |SecurityConfig      |Unauthenticated access attempt on api: /logNotification/all
+18.06.2023. 18:57:24|WARN |SecurityConfig      |Unauthenticated access attempt on api: /users/email/43
+18.06.2023. 19:12:14|INFO |LoginUseCase        |User with email: markocvijeticbezbednost@gmail.com log in successfully
+18.06.2023. 19:12:21|WARN |SecurityConfig      |Unauthenticated access attempt on api: /logNotification/new
+18.06.2023. 19:12:57|WARN |SecurityConfig      |Unauthenticated access attempt on api: /users/startdate
+18.06.2023. 19:19:16|WARN |SecurityConfig      |Unauthenticated access attempt on api: /logNotification/setRead
+18.06.2023. 20:27:24|WARN |SecurityConfig      |Unauthenticated access attempt on api: /users/email/43
+18.06.2023. 23:41:06|WARN |SecurityConfig      |Unauthenticated access attempt on api: /users/email/43

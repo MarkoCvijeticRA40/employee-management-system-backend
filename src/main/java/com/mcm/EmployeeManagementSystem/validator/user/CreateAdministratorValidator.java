@@ -82,7 +82,7 @@ public class CreateAdministratorValidator implements Validator<User> {
     }
 
     private static boolean isRoleNameValid(User user) {
-        for (String role: user.getRoleNames()) {
+        for (String role : user.getRoleNames()) {
             if (role == RoleConstant.SOFTWARE_ENGINEER || role == RoleConstant.HR_MANAGER || role == RoleConstant.PROJECT_MANAGER) {
                 continue;
             }

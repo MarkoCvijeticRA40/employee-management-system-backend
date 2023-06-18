@@ -5,6 +5,7 @@ import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
 import com.mcm.EmployeeManagementSystem.validator.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 
 @Component
@@ -12,6 +13,7 @@ import java.util.HashMap;
 public class FindUsersByRoleValidator implements Validator<String> {
 
     private final UserStore store;
+
     @Override
     public ValidationReport validate(String role) {
         ValidationReport report = new ValidationReport(true, new HashMap<>());

@@ -1,8 +1,6 @@
 package com.mcm.EmployeeManagementSystem.validator.user;
 
 import com.mcm.EmployeeManagementSystem.constant.AddressConstant;
-import com.mcm.EmployeeManagementSystem.constant.RegistrationRequestConstant;
-import com.mcm.EmployeeManagementSystem.constant.RoleConstant;
 import com.mcm.EmployeeManagementSystem.constant.UserConstant;
 import com.mcm.EmployeeManagementSystem.model.User;
 import com.mcm.EmployeeManagementSystem.validator.ValidationReport;
@@ -16,7 +14,7 @@ import static org.apache.logging.log4j.util.Strings.isBlank;
 
 @Component
 @RequiredArgsConstructor
-public class UnblockUserValidator  implements Validator<User> {
+public class UnblockUserValidator implements Validator<User> {
 
     @Override
     public ValidationReport validate(User user) {
@@ -69,7 +67,7 @@ public class UnblockUserValidator  implements Validator<User> {
                 report.setValid(false);
                 report.addMessage(UserConstant.ROLE_NAMES, "role name is blank");
             }
-            if(user.getRoleNames().contains("Administrator")){
+            if (user.getRoleNames().contains("Administrator")) {
                 report.setValid(false);
                 report.addMessage(UserConstant.ROLE_NAMES, "can not unban administrator");
             }

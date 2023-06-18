@@ -1,6 +1,5 @@
 package com.mcm.EmployeeManagementSystem.usecase.authentication;
 
-import com.mcm.EmployeeManagementSystem.dto.AuthenticationResponse;
 import com.mcm.EmployeeManagementSystem.dto.GenerateTokensResponse;
 import com.mcm.EmployeeManagementSystem.security.config.JwtService;
 import com.mcm.EmployeeManagementSystem.security.token.Token;

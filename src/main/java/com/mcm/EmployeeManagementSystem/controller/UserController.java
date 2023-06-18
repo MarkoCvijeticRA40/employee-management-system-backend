@@ -20,7 +20,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -57,7 +56,7 @@ public class UserController {
     private final BlockUserUseCase blockUserUseCase;
     private final UnblockUserUseCase unblockUserUseCase;
     private final UserRepository userRepository;
-    private  final UserConverter userConverter;
+    private final UserConverter userConverter;
     private final EditHrManagerUseCase editHrManagerUseCase;
     private UpdateUserCodesUseCase updateUserCodesUseCase;
     private final DataEncryptor dataEncryptor;
@@ -96,7 +95,9 @@ public class UserController {
     }
 
     @GetMapping("startdate")
-    public List<User> getAllWithStartDate() { return findUsersWithStartDateUseCase.findUsersWithStartDate(); }
+    public List<User> getAllWithStartDate() {
+        return findUsersWithStartDateUseCase.findUsersWithStartDate();
+    }
 
     @GetMapping("potential/workers")
     public List<User> getAllPotentialWorkers() {
@@ -116,7 +117,9 @@ public class UserController {
     }
 
     @PostMapping("/register/administrator")
-    public Response registerUser(@RequestBody User user) { return createAdministratorProfileUseCase.register(user); }
+    public Response registerUser(@RequestBody User user) {
+        return createAdministratorProfileUseCase.register(user);
+    }
 
     @GetMapping("/search/engineers/{email}/{name}/{surname}/{startDate}/{endDate}")
     public Response searchEngineers(@PathVariable String email, @PathVariable String name, @PathVariable String surname, @PathVariable String startDate, @PathVariable String endDate
@@ -148,7 +151,7 @@ public class UserController {
     public Response user(@PathVariable String email) {
         return findUserByEmailUseCase.find(email);
     }
-  
+
     @PutMapping("/{id}/project-manager")
     public Response updateProjectManager(@PathVariable Long id, @RequestBody User user) {
         return editProjectManagerUseCase.update(id, user);

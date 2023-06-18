@@ -39,13 +39,13 @@ public class RefreshTokenValidator {
                     report.addMessage(AuthenticationConstant.REFRESH_TOKEN, "refresh token is not valid");
                 }
                 //Dodato zbog funkcionalnosti za blokiranje korisnika
-                if(user.isAccountEnabled() == false){
+                if (user.isAccountEnabled() == false) {
                     report.setValid(false);
-                    report.addMessage(UserConstant.IS_ACCOUNT_ENABLED,"user is not enabled");
+                    report.addMessage(UserConstant.IS_ACCOUNT_ENABLED, "user is not enabled");
                 }
-                if(user.getStartOfWork() == null) {
+                if (user.getStartOfWork() == null) {
                     report.setValid(false);
-                    report.addMessage(UserConstant.START_OF_WORK,"user do not start working");
+                    report.addMessage(UserConstant.START_OF_WORK, "user do not start working");
                 }
             }
         }

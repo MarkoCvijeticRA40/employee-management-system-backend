@@ -31,7 +31,7 @@ public class EditEngineerUseCase {
     }
 
     public User IsEngineerPasswordChanged(User user, User editedUser) {
-        if(!user.getPassword().equals(editedUser.getPassword())) {
+        if (!user.getPassword().equals(editedUser.getPassword())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         return user;

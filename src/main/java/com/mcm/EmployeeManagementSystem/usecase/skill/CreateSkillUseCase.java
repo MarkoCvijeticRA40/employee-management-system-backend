@@ -16,6 +16,7 @@ public class CreateSkillUseCase {
     private final CreateSkillValidator validator;
     private final SkillStore skillStore;
     private final UserStore userStore;
+
     public Response create(Long userId, Skill skill) {
         User user = userStore.find(userId);
         skill.setUser(user);

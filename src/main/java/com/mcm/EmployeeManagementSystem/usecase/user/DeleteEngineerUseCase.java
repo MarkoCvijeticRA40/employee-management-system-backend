@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class DeleteEngineerUseCase {
     private final UserStore store;
     private final FindUserValidator validator;
+
     public Response delete(Long id) {
         ValidationReport report = validator.validate(id);
         User user = new User();

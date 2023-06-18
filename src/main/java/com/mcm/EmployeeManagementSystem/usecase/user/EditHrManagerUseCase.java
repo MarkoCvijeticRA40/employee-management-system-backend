@@ -32,7 +32,7 @@ public class EditHrManagerUseCase {
     }
 
     public User IsHrManagerPasswordChanged(User user, User editedUser) {
-        if(!user.getPassword().equals(editedUser.getPassword())) {
+        if (!user.getPassword().equals(editedUser.getPassword())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         return user;

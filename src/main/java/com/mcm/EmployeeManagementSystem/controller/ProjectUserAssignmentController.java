@@ -25,6 +25,7 @@ public class ProjectUserAssignmentController {
     public Response create(@RequestBody com.mcm.EmployeeManagementSystem.dto.ProjectUserAssignment projectUserAssignment) {
         return createProjectUserAssignmentUseCase.create(projectUserAssignment);
     }
+
     @GetMapping("/user/{id}")
     public Response getAssignmentsByUserId(@PathVariable Long id) {
         return findByUserIdUseCase.findByUserId(id);
@@ -39,6 +40,7 @@ public class ProjectUserAssignmentController {
     public Response update(@PathVariable Long id, @RequestBody ProjectUserAssignment projectUserAssignment) {
         return editProjectUserAssignmentUseCase.update(id, projectUserAssignment);
     }
+
     @DeleteMapping("/{id}")
     public Response delete(@PathVariable Long id) {
         return deleteProjectUserAssignmentUseCase.delete(id);

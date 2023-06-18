@@ -2,12 +2,15 @@ package com.mcm.EmployeeManagementSystem.security.config;
 
 import com.mcm.EmployeeManagementSystem.security.crypto.DataEncryptor;
 import com.mcm.EmployeeManagementSystem.security.token.TokenRepository;
+import com.mcm.EmployeeManagementSystem.usecase.log.ShouldWarnAdminUseCase;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     private final TokenRepository tokenRepository;
+    private final ShouldWarnAdminUseCase shouldWarnAdminUseCase;
     private final DataEncryptor dataEncryptor;
 
     @Override
@@ -37,6 +41,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            Logger logger = LogManager.getLogger(SecurityConfig.class);
+            logger.warn("Unauthenticated access attempt on api: " + request.getRequestURI());
+            shouldWarnAdminUseCase.check("WARN", "SecurityConfiguration", "Unauthenticated access attempt on api: " + request.getRequestURI());
             filterChain.doFilter(request, response);
             return;
         }
